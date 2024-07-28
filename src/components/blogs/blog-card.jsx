@@ -17,10 +17,7 @@ const BlogCard = ({ blog }) => {
   return (
     <div className="card bg-base-100 shadow-sm cursor-pointer md:mt-0 mt-3 hover:scale-105 hover:shadow-md transition-all ease-in-out">
       <figure>
-        <img
-          src={process.env.PUBLIC_BACKEND_BASE_URL + url}
-          alt={alternativeText}
-        />
+        <img src={url} alt={alternativeText} />
       </figure>
       <div className="card-body">
         <h2 className="card-title text-base font-semibold hover:text-[#3945D4] transition-all duration-75">

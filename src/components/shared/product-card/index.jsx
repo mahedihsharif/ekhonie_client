@@ -30,11 +30,7 @@ const ProductCard = ({ product }) => {
             <span className="text-white text-[12px]">{offer}%</span>
           </div>
         )}
-        <img
-          src={process.env.PUBLIC_BACKEND_BASE_URL + url}
-          alt={alternativeText}
-          className="h-52"
-        />
+        <img src={url} alt={alternativeText} className="h-52" />
         <div className="absolute top-0 right-0 p-4  transform translate-x-full group-hover:translate-x-0 transition-transform duration-700 ease-in-out">
           <div className="border-[1px] w-full h-full rounded-full p-[0.3rem]">
             <IoIosHeartEmpty className="text-md text-[#626363] " />
