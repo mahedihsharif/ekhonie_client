@@ -1,15 +1,16 @@
 /** @type {import('tailwindcss').Config} */
+
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
       backgroundImage: {
-        bannerLeft: "url('./src/assets/banner_1_1.jpg')",
-        bannerRight1: "url('./src/assets/img_1_1.jpg')",
-        bannerRight2: "url('./src/assets/img_1_2.jpg')",
-        threeCardImg1: "url('./src/assets/img_1_2.jpg')",
-        threeCardImg2: "url('./src/assets/banner_1_1.jpg')",
-        threeCardImg3: "url('./src/assets/banner_1_3.jpg')",
+        bannerLeft: "url('/assets/banner_1_1.jpg')",
+        bannerRight1: "url('/assets/img_1_1.jpg')",
+        bannerRight2: "url('/assets/img_1_2.jpg')",
+        threeCardImg1: "url('/assets/img_1_2.jpg')",
+        threeCardImg2: "url('/assets/banner_1_1.jpg')",
+        threeCardImg3: "url('/assets/banner_1_3.jpg')",
       },
       keyframes: {
         fadeInOut: {

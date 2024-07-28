@@ -2,9 +2,9 @@ import { format } from "date-fns";
 import React, { useEffect, useState } from "react";
 import { CiStopwatch } from "react-icons/ci";
 import { getProducts } from "../../../api";
-import HotDealImage from "../../../assets/hotdealsimg.png";
 import LargeCard from "../../shared/large-card";
 import ProductCard from "../../shared/product-card";
+import HotDealImage from "/assets/hotdealsimg.png";
 
 const HotDeals = () => {
   const [products, setProducts] = useState(null);

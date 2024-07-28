@@ -1,6 +1,6 @@
 import React from "react";
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
-import UsaFlag from "../../../assets/united-states.png";
+import UsaFlag from "/assets/united-states.png";
 
 const TopBarBottom = () => {
   return (

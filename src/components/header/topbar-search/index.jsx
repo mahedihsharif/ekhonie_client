@@ -2,7 +2,7 @@ import React from "react";
 import { BsCart2 } from "react-icons/bs";
 import { CgProfile } from "react-icons/cg";
 import { IoIosHeartEmpty } from "react-icons/io";
-import Logo from "../../../assets/logo.png";
+import Logo from "/assets/logo.png";
 
 const TopBarSearch = () => {
   return (
