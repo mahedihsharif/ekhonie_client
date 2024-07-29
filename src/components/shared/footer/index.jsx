@@ -4,10 +4,10 @@ import FooterTop from "./footer-top";
 
 const Footer = () => {
   return (
-    <div className="w-full overflow-x-hidden">
+    <>
       <FooterTop />
       <FooterBottom />
-    </div>
+    </>
   );
 };
 

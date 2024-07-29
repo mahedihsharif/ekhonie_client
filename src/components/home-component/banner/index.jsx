@@ -17,7 +17,7 @@ const Banner = () => {
           <p className="text-white font-medium text-base md:mt-5 mt-2">
             Limited Time: Online Only!
           </p>
-          <button className="text-[12px] uppercase font-semibold bg-white px-10 rounded-[10rem] py-4 hover:bg-blue-700 hover:text-white transition-all 5s ease-linear my-4 md:mt-8">
+          <button className="text-[12px] uppercase font-semibold bg-white md:px-10 px-5 rounded-[10rem] md:py-4 py-2 hover:bg-blue-700 hover:text-white transition-all 5s ease-linear my-4 md:mt-8">
             Shop Now
           </button>
         </div>

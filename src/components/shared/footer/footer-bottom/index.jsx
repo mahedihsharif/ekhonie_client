@@ -9,19 +9,21 @@ const FooterBottom = () => {
           const { id, title, desc, call, address } = data;
           return (
             <div key={id} className="md:w-30 mt-5 md:mt-0">
-              <h2 className="text-[#212529] text-sm uppercase font-bold">
+              <h2 className="text-[#212529] text-sm uppercase font-bold max-md:text-center">
                 {title}
               </h2>
-              <p className="w-full md:w-96 text-[#515d66] font-medium text-sm leading-8">
+              <p className="w-full md:w-96 text-[#515d66] font-medium text-sm leading-8 max-md:text-center">
                 {desc}
               </p>
               {call && (
-                <h1 className="text-[#2b38d1] font-medium text-3xl leading-9 pb-5">
+                <h1 className="text-[#2b38d1] font-medium text-3xl leading-9 pb-5 max-md:text-center">
                   {call}
                 </h1>
               )}
               {address && (
-                <p className="text-[#515d66] text-sm font-medium">{address}</p>
+                <p className="text-[#515d66] text-sm font-medium max-md:text-center">
+                  {address}
+                </p>
               )}
             </div>
           );

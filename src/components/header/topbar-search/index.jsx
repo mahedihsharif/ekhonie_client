@@ -6,7 +6,7 @@ import Logo from "/assets/logo.png";
 
 const TopBarSearch = () => {
   return (
-    <div className="flex justify-between px-5 2xl:px-60 items-center overflow-x-hidden border-b-[1px] gap-5 py-5">
+    <div className="flex justify-between px-5 2xl:px-60 items-center border-b-[1px] gap-5 py-5">
       <div>
         <img src={Logo} alt="" className="md:w-36 w-24" />
       </div>
@@ -15,7 +15,7 @@ const TopBarSearch = () => {
           <div className="flex items-center border-2 border-r-0 rounded-md">
             <select
               name="categories"
-              className="w-40 hidden md:block py-2  px-3 outline-none"
+              className="w-40 hidden md:block md:py-2 py-1  px-3 outline-none"
             >
               <option>All Categories</option>
               <option>United States</option>
@@ -26,15 +26,16 @@ const TopBarSearch = () => {
             <input
               type="text"
               name="search"
-              className="lg:w-96 md:w-72 w-full py-2 outline-none md:pl-10 pl-5 pr-3"
+              className="lg:w-96 md:w-72 w-full md:py-2 py-1 outline-none md:pl-10 pl-5 pr-3"
               placeholder="Search product"
             />
-            <button className="bg-blue-700 py-2 text-white px-8 rounded">
+            <button className="bg-blue-700 md:py-2 py-1 text-white md:px-8 px-4 rounded">
               Search
             </button>
           </div>
         </form>
       </div>
+
       <div className="flex justify-between items-center gap-5 2xl:gap-8">
         <div className="hidden lg:block">
           <div className="flex justify-between items-center gap-1 cursor-pointer">

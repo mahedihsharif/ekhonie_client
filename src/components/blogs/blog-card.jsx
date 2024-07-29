@@ -30,7 +30,7 @@ const BlogCard = ({ blog }) => {
           {description.slice(0, 50)}
         </p>
         <span className="border-b-[1px]"></span>
-        <div className="flex justify-between items-center gap-28">
+        <div className="flex justify-between items-center md:gap-28 gap-16">
           <button className="uppercase text-[12px] font-bold cursor-pointer hover:text-[#3945D4]">
             read more
           </button>

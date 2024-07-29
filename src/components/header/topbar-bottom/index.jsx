@@ -5,7 +5,7 @@ import UsaFlag from "/assets/united-states.png";
 const TopBarBottom = () => {
   return (
     <div className="hidden lg:block whitespace-nowrap">
-      <div className="flex justify-between items-center gap-10 px-5 2xl:px-60 border-b-[1px] overflow-x-hidden py-3">
+      <div className="flex justify-between items-center gap-10 px-5 2xl:px-60 border-b-[1px] py-3">
         <div>
           <p>You are a student and students get 20% discount.</p>
         </div>

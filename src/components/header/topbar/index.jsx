@@ -5,7 +5,7 @@ import { TopBarData } from "./../../../data";
 
 const TopBar = () => {
   return (
-    <div className="w-full bg-[#2B38D1] py-4 whitespace-nowrap overflow-x-hidden">
+    <div className="w-full bg-[#2B38D1] py-4 whitespace-nowrap">
       <Marquee pauseOnHover={true} speed={120}>
         <div className="flex items-center justify-center gap-5">
           {TopBarData &&

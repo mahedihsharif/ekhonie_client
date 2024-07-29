@@ -22,7 +22,7 @@ const HotDeals = () => {
   };
 
   return (
-    <div className="mt-20 px-5 2xl:px-60 bg-[#F1F5F6] py-8 lg:py-16 overflow-x-hidden">
+    <div className="mt-20 px-5 2xl:px-60 bg-[#F1F5F6] py-8 lg:py-16">
       <LargeCard
         hotDeals={"HOT DEALS!"}
         getPrices={"GET OUR BEST PRICES"}

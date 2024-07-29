@@ -6,7 +6,6 @@ import FeaturedProducts from "../../components/home-component/featured-products"
 import HotDeals from "../../components/home-component/hot-deals";
 import ThreeCard from "../../components/home-component/three-card";
 import Footer from "../../components/shared/footer";
-import NavbarC from "../../components/test";
 
 const Home = () => {
   return (
@@ -16,7 +15,6 @@ const Home = () => {
       <HotDeals />
       <FeaturedProducts />
       <ThreeCard />
-      <NavbarC />
       <Blogs />
       <Footer />
     </>

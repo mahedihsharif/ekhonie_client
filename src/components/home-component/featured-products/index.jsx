@@ -18,7 +18,7 @@ const FeaturedProducts = () => {
     }
   };
   return (
-    <div className="px-5 2xl:px-60 bg-[#F1F5F6] py-8 lg:py-16 overflow-x-hidden">
+    <div className="px-5 2xl:px-60 bg-[#F1F5F6] py-8 lg:py-16">
       <LargeCard featured={"featured products"} btnText={"view all products"} />
 
       <div className="md:flex justify-between w-full gap-2 mt-3">
