@@ -70,3 +70,37 @@ export const FooterBottomData = [
     desc: "Join 20.000+ subscribers and get a new discount coupon on every Saturday. Updates information on Sales and Offers.",
   },
 ];
+
+//Carousel data items
+export const settings = {
+  dots: false,
+  infinite: true,
+  speed: 500,
+  slidesToShow: 8,
+  slidesToScroll: 1,
+  responsive: [
+    {
+      breakpoint: 1024,
+      settings: {
+        slidesToShow: 4,
+        slidesToScroll: 1,
+        infinite: true,
+        dots: false,
+      },
+    },
+    {
+      breakpoint: 768,
+      settings: {
+        slidesToShow: 3,
+        slidesToScroll: 1,
+      },
+    },
+    {
+      breakpoint: 480,
+      settings: {
+        slidesToShow: 2,
+        slidesToScroll: 1,
+      },
+    },
+  ],
+};

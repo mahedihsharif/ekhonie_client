@@ -1,7 +1,6 @@
 import React from "react";
 
 const Cat = ({ cat }) => {
-  console.log(cat);
   const {
     attributes: {
       title,
