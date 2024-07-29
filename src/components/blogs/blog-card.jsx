@@ -1,7 +1,6 @@
 import React from "react";
 
 const BlogCard = ({ blog }) => {
-  console.log(blog);
   const {
     attributes: {
       title,
@@ -15,7 +14,7 @@ const BlogCard = ({ blog }) => {
     },
   } = blog;
   return (
-    <div className="card bg-base-100 shadow-sm cursor-pointer md:mt-0 mt-3 hover:scale-105 hover:shadow-md transition-all ease-in-out">
+    <div className="card bg-base-100 shadow-sm cursor-pointer md:mt-0 mt-3 hover:scale-105 hover:shadow-md transition-all ease-in-out ml-3 max-sm:ml-0">
       <figure>
         <img src={url} alt={alternativeText} />
       </figure>

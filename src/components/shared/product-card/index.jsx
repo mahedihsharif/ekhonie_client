@@ -23,7 +23,7 @@ const ProductCard = ({ product }) => {
     },
   } = product;
   return (
-    <div className=" relative group overflow-hidden card card-compact bg-base-100 shadow-sm cursor-pointer mt-2 md:mt-0 hover:scale-105 hover:shadow-md transition-all ease-in-out">
+    <div className=" relative group overflow-hidden card card-compact bg-base-100 shadow-sm cursor-pointer mt-2 md:mt-0 hover:scale-105 hover:shadow-md transition-all ease-in-out ml-2 max-sm:ml-0">
       <figure className="relative">
         {offer && (
           <div className="absolute bg-[#E24142] px-5 py-[1px] left-2 top-2">
