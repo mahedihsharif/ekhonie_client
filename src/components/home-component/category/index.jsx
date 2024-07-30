@@ -9,9 +9,9 @@ import { getCategories } from "./../../../api/index";
 import Cat from "./Cat";
 
 const Category = () => {
-  // const [catData, setCatData] = useState(null);
+  const { data, loading, error } = useAsync(getCategories, "categories");
+  const [catData, setCatData] = useState(JSON.parse(data));
   const [settings, useSettings] = useState(null);
-  const { data: catData, loading, error } = useAsync(getCategories);
 
   useEffect(() => {
     // categories();
@@ -29,7 +29,7 @@ const Category = () => {
 
   return (
     <div className="container mx-auto pt-8">
-      {loading && (
+      {loading ? (
         <BeatLoader
           color="#0043b4"
           cssOverride={{ marginLeft: "50%", marginTop: "2%" }}
@@ -38,11 +38,14 @@ const Category = () => {
           size={22}
           speedMultiplier={1}
         />
-      )}
-      {settings && (
-        <Slider {...settings}>
-          {catData && catData.map((cat) => <Cat key={cat.id} cat={cat} />)}
-        </Slider>
+      ) : (
+        <>
+          {settings && (
+            <Slider {...settings}>
+              {catData && catData.map((cat) => <Cat key={cat.id} cat={cat} />)}
+            </Slider>
+          )}
+        </>
       )}
     </div>
   );

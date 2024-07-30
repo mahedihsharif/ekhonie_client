@@ -8,9 +8,9 @@ import LargeCard from "../../shared/large-card";
 import ProductCard from "../../shared/product-card";
 
 const FeaturedProducts = () => {
-  // const [products, setProducts] = useState(null);
+  const { data, loading, error } = useAsync(getProducts, "products_fixed");
+  const [products, setProducts] = useState(JSON.parse(data));
   const [settings, useSettings] = useState(null);
-  const { data: products, loading, error } = useAsync(getProducts);
 
   useEffect(() => {
     // getAllProducts();
@@ -30,7 +30,7 @@ const FeaturedProducts = () => {
       <LargeCard featured={"featured products"} btnText={"view all products"} />
 
       <div className="mt-3">
-        {loading && (
+        {loading ? (
           <BeatLoader
             color="#0043b4"
             cssOverride={{ marginLeft: "40%", marginTop: "8%" }}
@@ -39,14 +39,17 @@ const FeaturedProducts = () => {
             size={22}
             speedMultiplier={1}
           />
-        )}
-        {settings && (
-          <Slider {...settings}>
-            {products &&
-              products.map((product) => (
-                <ProductCard key={product.id} product={product} />
-              ))}
-          </Slider>
+        ) : (
+          <>
+            {settings && (
+              <Slider {...settings}>
+                {products &&
+                  products.map((product) => (
+                    <ProductCard key={product.id} product={product} />
+                  ))}
+              </Slider>
+            )}
+          </>
         )}
       </div>
     </div>

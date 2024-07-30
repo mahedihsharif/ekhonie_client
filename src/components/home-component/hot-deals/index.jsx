@@ -13,10 +13,11 @@ import ProductCard from "../../shared/product-card";
 import HotDealImage from "/assets/hotdealsimg.png";
 
 const HotDeals = () => {
-  // const [products, setProducts] = useState(null);
+  const { data, loading, error } = useAsync(getProducts, "products");
+  const [products, setProducts] = useState(JSON.parse(data));
   const date = format(new Date(), "hh:mm:ss");
   const [settings, useSettings] = useState(null);
-  const { data: products, loading, error } = useAsync(getProducts);
+
   useEffect(() => {
     // getAllProducts();
     const sliderData = sliderSettings(4, 3, 2, 1);
@@ -46,7 +47,7 @@ const HotDeals = () => {
         </div>
 
         <div className="w-full md:w-[70%] mt-3 md:mt-0 container mx-auto">
-          {loading && (
+          {loading ? (
             <BeatLoader
               color="#0043b4"
               cssOverride={{ marginLeft: "40%", marginTop: "15%" }}
@@ -55,16 +56,17 @@ const HotDeals = () => {
               size={22}
               speedMultiplier={1}
             />
-          )}
-          {settings && (
-            <Slider {...settings}>
-              {products &&
-                products
-                  .splice(1, 4)
-                  .map((product) => (
-                    <ProductCard key={product.id} product={product} />
-                  ))}
-            </Slider>
+          ) : (
+            <>
+              {settings && (
+                <Slider {...settings}>
+                  {products &&
+                    products.map((product) => (
+                      <ProductCard key={product.id} product={product} />
+                    ))}
+                </Slider>
+              )}
+            </>
           )}
         </div>
       </div>

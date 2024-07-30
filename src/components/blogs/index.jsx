@@ -7,9 +7,9 @@ import { getBlogs } from "./../../api/index";
 import BlogCard from "./blog-card";
 
 const Blogs = () => {
-  // const [blogs, setBlogs] = useState(null);
+  const { data, loading, error } = useAsync(getBlogs, "blogs");
+  const [blogs, setBlogs] = useState(JSON.parse(data));
   const [settings, useSettings] = useState(null);
-  const { data: blogs, loading, error } = useAsync(getBlogs);
 
   useEffect(() => {
     // getAllBlogs();
@@ -27,7 +27,7 @@ const Blogs = () => {
 
   return (
     <div className="px-5 2xl:px-60 bg-[#F1F5F6] py-5 md:py-16">
-      {loading && (
+      {loading ? (
         <BeatLoader
           color="#0043b4"
           cssOverride={{ marginLeft: "40%" }}
@@ -36,11 +36,15 @@ const Blogs = () => {
           size={22}
           speedMultiplier={1}
         />
-      )}
-      {settings && (
-        <Slider {...settings}>
-          {blogs && blogs.map((blog) => <BlogCard key={blog.id} blog={blog} />)}
-        </Slider>
+      ) : (
+        <>
+          {settings && (
+            <Slider {...settings}>
+              {blogs &&
+                blogs.map((blog) => <BlogCard key={blog.id} blog={blog} />)}
+            </Slider>
+          )}
+        </>
       )}
     </div>
   );
