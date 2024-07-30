@@ -1,29 +1,26 @@
 import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import Slider from "react-slick";
 import { BeatLoader } from "react-spinners";
-import useAsync from "../../hooks/useAsync";
+import useData from "../../hooks/useData";
+import { get_blogs } from "../../redux/reducers/blogReducer";
 import { sliderSettings } from "../../settings/slider-settings";
-import { getBlogs } from "./../../api/index";
 import BlogCard from "./blog-card";
 
 const Blogs = () => {
-  const { data, loading, error } = useAsync(getBlogs, "blogs");
-  const [blogs, setBlogs] = useState(JSON.parse(data));
   const [settings, useSettings] = useState(null);
+  const dispatch = useDispatch();
+  const blogs = useSelector((state) => state.blogs);
+  const { data: blogsData, loading, error } = useData(blogs);
 
   useEffect(() => {
-    // getAllBlogs();
+    dispatch(get_blogs());
+  }, [dispatch]);
+
+  useEffect(() => {
     const sliderData = sliderSettings(4, 3, 2, 1);
     useSettings({ ...sliderData });
   }, []);
-
-  // const getAllBlogs = async () => {
-  //   try {
-  //     await getBlogs().then((res) => setBlogs(res.data.data));
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
 
   return (
     <div className="px-5 2xl:px-60 bg-[#F1F5F6] py-5 md:py-16">
@@ -40,8 +37,8 @@ const Blogs = () => {
         <>
           {settings && (
             <Slider {...settings}>
-              {blogs &&
-                blogs.map((blog) => <BlogCard key={blog.id} blog={blog} />)}
+              {blogsData &&
+                blogsData.map((blog) => <BlogCard key={blog.id} blog={blog} />)}
             </Slider>
           )}
         </>

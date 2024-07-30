@@ -1,31 +1,28 @@
 import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import Slider from "react-slick";
 import { BeatLoader } from "react-spinners";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
-import useAsync from "../../../hooks/useAsync";
+import useData from "../../../hooks/useData";
+import { get_category } from "../../../redux/reducers/categoryReducer";
 import { sliderSettings } from "../../../settings/slider-settings";
-import { getCategories } from "./../../../api/index";
 import Cat from "./Cat";
 
 const Category = () => {
-  const { data, loading, error } = useAsync(getCategories, "categories");
-  const [catData, setCatData] = useState(JSON.parse(data));
+  const dispatch = useDispatch();
   const [settings, useSettings] = useState(null);
+  const categories = useSelector((state) => state.categories);
+  const { data: catData, loading, error } = useData(categories);
 
   useEffect(() => {
-    // categories();
+    dispatch(get_category());
+  }, [dispatch]);
+
+  useEffect(() => {
     const sliderData = sliderSettings(8, 4, 3, 2);
     useSettings({ ...sliderData });
   }, []);
-  // const categories = async () => {
-  //   try {
-  //     const data = await getCategories().then((res) => res.data.data);
-  //     setCatData(data);
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
 
   return (
     <div className="container mx-auto pt-8">

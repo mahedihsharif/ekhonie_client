@@ -1,36 +1,33 @@
 import { format } from "date-fns";
 import React, { useEffect, useState } from "react";
 import { CiStopwatch } from "react-icons/ci";
+import { useDispatch, useSelector } from "react-redux";
 import Slider from "react-slick";
 import { BeatLoader } from "react-spinners";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
-import { getProducts } from "../../../api";
-import useAsync from "../../../hooks/useAsync";
+import useData from "../../../hooks/useData";
+import { get_products } from "../../../redux/reducers/productReducer";
 import { sliderSettings } from "../../../settings/slider-settings";
 import LargeCard from "../../shared/large-card";
 import ProductCard from "../../shared/product-card";
 import HotDealImage from "/assets/hotdealsimg.png";
 
 const HotDeals = () => {
-  const { data, loading, error } = useAsync(getProducts, "products");
-  const [products, setProducts] = useState(JSON.parse(data));
+  const dispatch = useDispatch();
   const date = format(new Date(), "hh:mm:ss");
   const [settings, useSettings] = useState(null);
+  const products = useSelector((state) => state.products);
+  const { data: productsData, loading, error } = useData(products);
 
   useEffect(() => {
-    // getAllProducts();
+    dispatch(get_products());
+  }, [dispatch]);
+
+  useEffect(() => {
     const sliderData = sliderSettings(4, 3, 2, 1);
     useSettings({ ...sliderData });
   }, []);
-
-  // const getAllProducts = async () => {
-  //   try {
-  //     await getProducts().then((res) => setProducts(res.data.data));
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
 
   return (
     <div className="mt-20 px-5 2xl:px-60 bg-[#F1F5F6] py-8 lg:py-16">
@@ -60,8 +57,8 @@ const HotDeals = () => {
             <>
               {settings && (
                 <Slider {...settings}>
-                  {products &&
-                    products.map((product) => (
+                  {productsData &&
+                    productsData.map((product) => (
                       <ProductCard key={product.id} product={product} />
                     ))}
                 </Slider>

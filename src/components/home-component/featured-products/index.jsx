@@ -1,30 +1,22 @@
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import Slider from "react-slick";
 import { BeatLoader } from "react-spinners";
-import { getProducts } from "../../../api";
-import useAsync from "../../../hooks/useAsync";
+import useData from "../../../hooks/useData";
 import { sliderSettings } from "../../../settings/slider-settings";
 import LargeCard from "../../shared/large-card";
 import ProductCard from "../../shared/product-card";
 
 const FeaturedProducts = () => {
-  const { data, loading, error } = useAsync(getProducts, "products_fixed");
-  const [products, setProducts] = useState(JSON.parse(data));
   const [settings, useSettings] = useState(null);
+  const products = useSelector((state) => state.products);
+  const { data: productsData, loading, error } = useData(products);
 
   useEffect(() => {
-    // getAllProducts();
     const sliderData = sliderSettings(6, 4, 2, 1);
     useSettings({ ...sliderData });
   }, []);
 
-  // const getAllProducts = async () => {
-  //   try {
-  //     await getProducts().then((res) => setProducts(res.data.data));
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
   return (
     <div className="px-5 2xl:px-60 bg-[#F1F5F6] py-8 lg:py-16">
       <LargeCard featured={"featured products"} btnText={"view all products"} />
@@ -43,8 +35,8 @@ const FeaturedProducts = () => {
           <>
             {settings && (
               <Slider {...settings}>
-                {products &&
-                  products.map((product) => (
+                {productsData &&
+                  productsData.map((product) => (
                     <ProductCard key={product.id} product={product} />
                   ))}
               </Slider>
