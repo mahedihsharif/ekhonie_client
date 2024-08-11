@@ -70,3 +70,22 @@ export const FooterBottomData = [
     desc: "Join 20.000+ subscribers and get a new discount coupon on every Saturday. Updates information on Sales and Offers.",
   },
 ];
+
+export const formData = {
+  firstName: {
+    type: "text",
+    label: "First Name",
+  },
+  lastName: {
+    type: "text",
+    label: "Last Name",
+  },
+  email: {
+    type: "email",
+    label: "Email Address",
+  },
+  password: {
+    type: "password",
+    label: "Password",
+  },
+};

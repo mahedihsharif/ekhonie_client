@@ -2,13 +2,17 @@ import React from "react";
 import { BsCart2 } from "react-icons/bs";
 import { CgProfile } from "react-icons/cg";
 import { IoIosHeartEmpty } from "react-icons/io";
+import { Link } from "react-router-dom";
 import Logo from "/assets/logo.png";
 
 const TopBarSearch = () => {
   return (
     <div className="flex justify-between px-5 2xl:px-60 items-center border-b-[1px] gap-5 py-5">
       <div>
-        <img src={Logo} alt="" className="md:w-36 w-24" />
+        <Link to={"/"}>
+          {" "}
+          <img src={Logo} alt="" className="md:w-36 w-24" />
+        </Link>
       </div>
       <div className="">
         <form action="">
@@ -40,7 +44,9 @@ const TopBarSearch = () => {
         <div className="hidden lg:block">
           <div className="flex justify-between items-center gap-1 cursor-pointer">
             <CgProfile className="text-2xl" />
-            <span className="text-base">Login</span>
+            <Link to={"/login"}>
+              <span className="text-base">Login</span>
+            </Link>
           </div>
         </div>
         <div className="hidden lg:block relative cursor-pointer">

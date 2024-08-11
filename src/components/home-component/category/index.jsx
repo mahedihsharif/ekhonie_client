@@ -15,6 +15,8 @@ const Category = () => {
   const categories = useSelector((state) => state.categories);
   const { data: catData, loading, error } = useData(categories);
 
+  console.log(loading);
+
   useEffect(() => {
     dispatch(get_category());
   }, [dispatch]);
