@@ -1,19 +1,19 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import { toast, ToastContainer } from "react-toastify";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { loginAccount } from "../../../api";
 import useForm from "../../../hooks/useForm";
 
 const init = {
-  email: "",
+  identifier: "",
   password: "",
 };
 
 const validate = (values) => {
   const errors = {};
-
-  if (!values.email) {
-    errors.email = "Email is Required";
+  if (!values.identifier) {
+    errors.identifier = "Email is Required";
   }
   if (!values.password) {
     errors.password = "Password is Required";
@@ -24,8 +24,9 @@ const validate = (values) => {
 };
 
 const Login = () => {
-  const [values, setValues] = useState(null);
+  const [users, setUsers] = useState(null);
   const [error, setError] = useState();
+  const navigate = useNavigate();
 
   const {
     formState,
@@ -38,18 +39,24 @@ const Login = () => {
 
   const submit = ({ hasError, error: err, values }) => {
     if (hasError) {
-      toast.error("Input Field is Empty!");
       setError(err);
+      toast.error("Input Field is Empty!");
     } else {
-      toast.success("Your Account has been created Successfully");
-      setValues(values);
+      try {
+        const userData = loginAccount(values);
+        userData.then((data) => setUsers(data));
+        navigate("/");
+        toast.success("Account Login Successfully!");
+      } catch (err) {
+        console.log(err);
+        toast.error("Failed to login account. Please try again.");
+      }
     }
   };
-
+  console.log(users);
   return (
     <>
-      <ToastContainer />
-      <div className="flex justify-center px-5 2xl:px-60 items-center gap-5 py-44 bg-gray-100 ">
+      <div className="flex justify-center px-5 2xl:px-60 gap-5 py-44 bg-gray-100 ">
         <div className="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-md">
           <div className="flex justify-center items-center gap-20 border-b-2 border-gray-200 pb-5">
             <p className="text-md font-medium text-center uppercase">Login</p>
@@ -64,17 +71,19 @@ const Login = () => {
               </label>
               <input
                 type={"text"}
-                value={formState.email.value}
+                value={formState.identifier.value}
                 label={"Email"}
-                name={"email"}
+                name={"identifier"}
                 placeholder={"Email Address"}
                 onChange={handleChange}
                 onFocus={handleFocus}
                 onBlur={handleBlur}
                 className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
               />
-              {formState.email.error && (
-                <span className="text-red-700">{formState.email.error}</span>
+              {formState.identifier.error && (
+                <span className="text-red-700">
+                  {formState.identifier.error}
+                </span>
               )}
             </div>
             <div>

@@ -1,12 +1,13 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { createAccount } from "../../../api";
 import useForm from "../../../hooks/useForm";
 
 const init = {
   firstName: "",
   lastName: "",
+  username: "",
   email: "",
   password: "",
 };
@@ -23,6 +24,11 @@ const validate = (values) => {
   } else if (values.lastName.length < 2) {
     errors.lastName = "Last Name Must be upto 3 Characters";
   }
+  if (!values.username) {
+    errors.username = "Username is Required";
+  } else if (values.username.length < 5) {
+    errors.username = "Username Must be upto 5 Characters";
+  }
   if (!values.email) {
     errors.email = "Email is Required";
   }
@@ -35,8 +41,9 @@ const validate = (values) => {
 };
 
 const Register = () => {
-  const [values, setValues] = useState(null);
+  const [users, setUsers] = useState(null);
   const [error, setError] = useState();
+  const navigate = useNavigate();
 
   const {
     formState,
@@ -49,17 +56,23 @@ const Register = () => {
 
   const submit = ({ hasError, error: err, values }) => {
     if (hasError) {
-      toast.error("Input Field is Empty!");
       setError(err);
+      toast.error("Input Field is Empty!");
     } else {
-      toast.success("Your Account has been created Successfully");
-      setValues(values);
+      try {
+        const userData = createAccount(values);
+        userData.then((data) => setUsers(data));
+        navigate("/");
+        toast.success("Your Account has been created Successfully");
+      } catch (err) {
+        console.log(err);
+        toast.error("Failed to create account. Please try again.");
+      }
     }
   };
 
   return (
     <>
-      <ToastContainer />
       <div className="flex justify-center px-5 2xl:px-60 items-center gap-5 py-28 bg-gray-100 ">
         <div className="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-md">
           <div className="flex justify-center items-center gap-20 border-b-2 border-gray-200 pb-5">
@@ -110,7 +123,24 @@ const Register = () => {
                 <span className="text-red-700">{formState.lastName.error}</span>
               )}
             </div>
-
+            <div>
+              <label className="block mb-1 text-md font-medium text-gray-700">
+                Username
+              </label>
+              <input
+                type={"text"}
+                value={formState.username.value}
+                name={"username"}
+                placeholder={"Username"}
+                onChange={handleChange}
+                onFocus={handleFocus}
+                onBlur={handleBlur}
+                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+              />
+              {formState.username.error && (
+                <span className="text-red-700">{formState.username.error}</span>
+              )}
+            </div>
             <div>
               <label className="block mb-1 text-md font-medium text-gray-700">
                 Email
