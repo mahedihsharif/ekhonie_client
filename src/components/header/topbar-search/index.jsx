@@ -1,11 +1,32 @@
-import React from "react";
+import React, { useState } from "react";
 import { BsCart2 } from "react-icons/bs";
 import { CgProfile } from "react-icons/cg";
 import { IoIosHeartEmpty } from "react-icons/io";
-import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { logout } from "../../../redux/reducers/authReducer";
 import Logo from "/assets/logo.png";
 
 const TopBarSearch = () => {
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.auth.user);
+  const token = useSelector((state) => state.auth.jwt);
+  const navigate = useNavigate();
+
+  const handleMouseEnter = () => {
+    setIsDropdownOpen(true);
+  };
+
+  const handleMouseLeave = () => {
+    setIsDropdownOpen(false);
+  };
+
+  const handleLogout = () => {
+    dispatch(logout());
+    navigate("/login");
+  };
+
   return (
     <div className="flex justify-between px-5 2xl:px-60 items-center border-b-[1px] gap-5 py-5">
       <div>
@@ -42,12 +63,40 @@ const TopBarSearch = () => {
 
       <div className="flex justify-between items-center gap-5 2xl:gap-8">
         <div className="hidden lg:block">
-          <div className="flex justify-between items-center gap-1 cursor-pointer">
-            <CgProfile className="text-2xl" />
-            <Link to={"/login"}>
+          {token && user?.email ? (
+            <div
+              className="relative flex justify-between items-center gap-1 cursor-pointer"
+              onMouseEnter={handleMouseEnter}
+              onMouseLeave={handleMouseLeave}
+            >
+              <CgProfile className="text-2xl" />
+              <span className="text-base">{user?.firstName}</span>
+              {isDropdownOpen && (
+                <ul className="flex flex-wrap items-center absolute left-0 top-0 mt-6 z-10 w-48 bg-white text-black shadow-lg py-5">
+                  <Link
+                    to={"/dashboard"}
+                    className="text-base px-4 py-2 w-48 hover:bg-gray-200"
+                  >
+                    Dashboard
+                  </Link>
+                  <li
+                    onClick={() => handleLogout()}
+                    className="text-base px-4 w-48 py-2 hover:bg-gray-200"
+                  >
+                    Logout
+                  </li>
+                </ul>
+              )}
+            </div>
+          ) : (
+            <Link
+              to={"/login"}
+              className="flex justify-between items-center gap-1 cursor-pointer"
+            >
+              <CgProfile className="text-2xl" />
               <span className="text-base">Login</span>
             </Link>
-          </div>
+          )}
         </div>
         <div className="hidden lg:block relative cursor-pointer">
           <div className="flex justify-center items-center absolute -top-1 -right-1 bg-[#DD3842] w-5 h-5 rounded-[50%]">

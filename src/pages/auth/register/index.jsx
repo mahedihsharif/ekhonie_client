@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { createAccount } from "../../../api";
+import { createUser } from "../../../api";
 import useForm from "../../../hooks/useForm";
 
 const init = {
@@ -60,9 +60,9 @@ const Register = () => {
       toast.error("Input Field is Empty!");
     } else {
       try {
-        const userData = createAccount(values);
+        const userData = createUser(values);
         userData.then((data) => setUsers(data));
-        navigate("/");
+        navigate("/login");
         toast.success("Your Account has been created Successfully");
       } catch (err) {
         console.log(err);

@@ -19,7 +19,7 @@ export const getBlogs = async () => {
   return data;
 };
 
-export const createAccount = async (userInfo) => {
+export const createUser = async (userInfo) => {
   const res = await axios.post(
     `${httpRequest.url}/auth/local/register`,
     userInfo
@@ -28,7 +28,7 @@ export const createAccount = async (userInfo) => {
   return data;
 };
 
-export const loginAccount = async (userInfo) => {
+export const loginUser = async (userInfo) => {
   const res = await axios.post(`${httpRequest.url}/auth/local`, userInfo);
   const data = res.data;
   return data;

@@ -1,9 +1,10 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { loginAccount } from "../../../api";
 import useForm from "../../../hooks/useForm";
+import { login_user } from "../../../redux/reducers/authReducer";
 
 const init = {
   identifier: "",
@@ -25,8 +26,8 @@ const validate = (values) => {
 
 const Login = () => {
   const [users, setUsers] = useState(null);
-  const [error, setError] = useState();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const {
     formState,
@@ -37,14 +38,13 @@ const Login = () => {
     clear,
   } = useForm({ init, validate });
 
-  const submit = ({ hasError, error: err, values }) => {
+  const submit = ({ hasError, error, values }) => {
     if (hasError) {
-      setError(err);
+      setError(error);
       toast.error("Input Field is Empty!");
     } else {
       try {
-        const userData = loginAccount(values);
-        userData.then((data) => setUsers(data));
+        dispatch(login_user(values));
         navigate("/");
         toast.success("Account Login Successfully!");
       } catch (err) {
@@ -53,7 +53,7 @@ const Login = () => {
       }
     }
   };
-  console.log(users);
+
   return (
     <>
       <div className="flex justify-center px-5 2xl:px-60 gap-5 py-44 bg-gray-100 ">
