@@ -3,9 +3,11 @@ import { GoEye } from "react-icons/go";
 import { IoIosHeartEmpty, IoMdCheckmark } from "react-icons/io";
 import { IoGitCompareOutline } from "react-icons/io5";
 import { TiStarFullOutline } from "react-icons/ti";
+import { Link } from "react-router-dom";
 
 const ProductCard = ({ product }) => {
   const {
+    id,
     attributes: {
       title,
       mrp,
@@ -22,8 +24,9 @@ const ProductCard = ({ product }) => {
       },
     },
   } = product;
+
   return (
-    <div className=" relative group overflow-hidden card card-compact bg-base-100 shadow-sm cursor-pointer mt-2 md:mt-0 hover:scale-105 hover:shadow-md transition-all ease-in-out ml-2 max-sm:ml-0">
+    <div className=" relative group overflow-hidden h-96 card card-compact bg-base-100 shadow-sm cursor-pointer mt-2 md:mt-0 hover:scale-105 hover:shadow-md transition-all ease-in-out ml-2 max-sm:ml-0">
       <figure className="relative">
         {offer && (
           <div className="absolute bg-[#E24142] px-5 py-[1px] left-2 top-2">
@@ -45,7 +48,7 @@ const ProductCard = ({ product }) => {
       </figure>
       <div className="card-body">
         <h2 className="card-title text-sm font-semibold leading-5 hover:text-[#3945D4] transition-all duration-75">
-          {title}
+          <Link to={`/products/${id}`}>{title}</Link>
         </h2>
         <div className="card-actions">
           <TiStarFullOutline className="text-[#FFC93D] text-lg font-bold" />

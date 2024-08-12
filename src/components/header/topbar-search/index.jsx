@@ -80,7 +80,7 @@ const TopBarSearch = () => {
                     Dashboard
                   </Link>
                   <li
-                    onClick={() => handleLogout()}
+                    onClick={handleLogout}
                     className="text-base px-4 w-48 py-2 hover:bg-gray-200"
                   >
                     Logout
