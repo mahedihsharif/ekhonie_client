@@ -26,6 +26,7 @@ const saveCartToLocalStorage = (cart) => {
 
 const initialState = {
   items: loadCartFromLocalStorage() || [],
+  totalQuantity: 0,
   status: "idle",
 };
 
@@ -33,6 +34,7 @@ const cartReducer = createSlice({
   name: "cart",
   initialState,
   reducers: {
+    //add to cart
     addToCart: (state, action) => {
       const product = action.payload;
       const existingProduct = state.items.find(
@@ -44,11 +46,40 @@ const cartReducer = createSlice({
       } else {
         state.items.push({ ...product, quantity: 1 });
       }
-
+      state.totalQuantity++;
       saveCartToLocalStorage(state.items);
     },
+    //remove cart
     removeFromCart: (state, action) => {
-      state.items = state.items.filter((item) => item.id !== action.payload);
+      const id = action.payload;
+      const existingItem = state.items.find((item) => item.id === id);
+
+      if (existingItem) {
+        state.items = state.items.filter((item) => item.id !== id);
+        state.totalQuantity -= existingItem.quantity;
+      }
+      saveCartToLocalStorage(state.items);
+    },
+    //increase quantity
+    increaseQuantity(state, action) {
+      const id = action.payload;
+      const existingItem = state.items.find((item) => item.id === id);
+
+      if (existingItem) {
+        existingItem.quantity++;
+        state.totalQuantity++;
+      }
+      saveCartToLocalStorage(state.items);
+    },
+    //decrease quantity
+    decreaseQuantity(state, action) {
+      const id = action.payload;
+      const existingItem = state.items.find((item) => item.id === id);
+
+      if (existingItem && existingItem.quantity > 1) {
+        existingItem.quantity--;
+        state.totalQuantity--;
+      }
       saveCartToLocalStorage(state.items);
     },
     clearCart: (state) => {
@@ -58,6 +89,12 @@ const cartReducer = createSlice({
   },
 });
 
-export const { addToCart, removeFromCart, clearCart } = cartReducer.actions;
+export const {
+  addToCart,
+  removeFromCart,
+  increaseQuantity,
+  decreaseQuantity,
+  clearCart,
+} = cartReducer.actions;
 
 export default cartReducer.reducer;

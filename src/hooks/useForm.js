@@ -20,8 +20,7 @@ const useForm = ({ init, validate }) => {
   const [state, setState] = useState(mapValuesToState(init));
 
   const handleChange = (e) => {
-    const { name: key, value, type } = e.target;
-
+    const { name: key, value, type, checked } = e.target;
     const oldState = deepClone(state);
 
     const { error } = getErrors();

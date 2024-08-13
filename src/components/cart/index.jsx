@@ -1,11 +1,15 @@
 // src/components/Cart.js
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { removeFromCart } from "../../redux/reducers/cartReducer";
+import { Link } from "react-router-dom";
+import {
+  decreaseQuantity,
+  increaseQuantity,
+  removeFromCart,
+} from "../../redux/reducers/cartReducer";
 
 const Cart = ({ isOpen, toggleCart }) => {
   const cartItems = useSelector((state) => state.cart.items);
-  console.log(cartItems);
   const dispatch = useDispatch();
 
   return (
@@ -40,7 +44,24 @@ const Cart = ({ isOpen, toggleCart }) => {
                   <div>
                     <img src={url} alt={alternativeText} className="w-16" />
                     <h3 className="text-sm font-normal">{title}</h3>
-                    <p className="text-gray-500">Qty: {quantity}</p>
+                    <p className="text-gray-500 mt-4 ">
+                      Qty:{" "}
+                      <button
+                        onClick={() => dispatch(decreaseQuantity(item.id))}
+                        className="ml-2 cursor-pointer text-xl border rounded-sm px-2"
+                      >
+                        -
+                      </button>
+                      <button className="ml-2 px-4 text-md font-semibold rounded-sm bg-[#F1F5F6] border">
+                        {quantity}
+                      </button>
+                      <button
+                        onClick={() => dispatch(increaseQuantity(item.id))}
+                        className="ml-2 cursor-pointer text-xl border rounded-sm px-2"
+                      >
+                        +
+                      </button>
+                    </p>
                   </div>
                   <button
                     onClick={() => dispatch(removeFromCart(item.id))}
@@ -60,6 +81,13 @@ const Cart = ({ isOpen, toggleCart }) => {
       >
         Close
       </button>
+      <Link to={"/checkout"}>
+        <div className="ml-14">
+          <button className="bg-blue-500 hover:bg-black text-white font-bold py-2 px-8 rounded">
+            Checkout
+          </button>
+        </div>
+      </Link>
     </div>
   );
 };

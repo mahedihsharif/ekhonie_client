@@ -15,10 +15,7 @@ const TopBarSearch = () => {
   const token = useSelector((state) => state.auth.jwt);
   const navigate = useNavigate();
   const [isCartOpen, setIsCartOpen] = useState(false);
-  const cartItemsCount = useSelector((state) =>
-    state.cart.items.reduce((total, item) => total + item.quantity, 0)
-  );
-
+  const cartItemsCount = useSelector((state) => state.cart.totalQuantity);
   const toggleCart = () => {
     setIsCartOpen(!isCartOpen);
   };
