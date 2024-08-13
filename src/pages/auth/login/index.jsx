@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -25,7 +25,6 @@ const validate = (values) => {
 };
 
 const Login = () => {
-  const [users, setUsers] = useState(null);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -40,7 +39,6 @@ const Login = () => {
 
   const submit = ({ hasError, error, values }) => {
     if (hasError) {
-      setError(error);
       toast.error("Input Field is Empty!");
     } else {
       try {

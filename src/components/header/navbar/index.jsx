@@ -29,17 +29,7 @@ const Navbar = () => {
             <li>
               <a>Home</a>
             </li>
-            <li>
-              <a>Shop</a>
-              <ul className="p-2">
-                <li>
-                  <a>Submenu 1</a>
-                </li>
-                <li>
-                  <a>Submenu 2</a>
-                </li>
-              </ul>
-            </li>
+            <li>Shop</li>
             <li>
               <a>Pages</a>
             </li>
@@ -79,7 +69,7 @@ const Navbar = () => {
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1 text-sm font-medium">
           <li>
-            <a>Home</a>
+            <Link to={"/"}>Home</Link>
           </li>
           <li>
             <a>Shop</a>
@@ -94,7 +84,7 @@ const Navbar = () => {
             <a>Blogs</a>
           </li>
           <li>
-            <a>Contact Us</a>
+            <Link to={"/contact"}>Contact Us</Link>
           </li>
         </ul>
       </div>

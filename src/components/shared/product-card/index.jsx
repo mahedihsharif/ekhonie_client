@@ -3,9 +3,13 @@ import { GoEye } from "react-icons/go";
 import { IoIosHeartEmpty, IoMdCheckmark } from "react-icons/io";
 import { IoGitCompareOutline } from "react-icons/io5";
 import { TiStarFullOutline } from "react-icons/ti";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import { addToCart } from "../../../redux/reducers/cartReducer";
 
 const ProductCard = ({ product }) => {
+  const dispatch = useDispatch();
+
   const {
     id,
     attributes: {
@@ -24,6 +28,10 @@ const ProductCard = ({ product }) => {
       },
     },
   } = product;
+
+  const handleAddToCart = () => {
+    dispatch(addToCart(product));
+  };
 
   return (
     <div className=" relative group overflow-hidden h-96 card card-compact bg-base-100 shadow-sm cursor-pointer mt-2 md:mt-0 hover:scale-105 hover:shadow-md transition-all ease-in-out ml-2 max-sm:ml-0">
@@ -80,7 +88,10 @@ const ProductCard = ({ product }) => {
         </p>
         {/* Button and Icons (initially hidden, appear on hover) */}
         <div className="absolute bottom-0 left-0 right-0 p-4 bg-white transform translate-y-full group-hover:translate-y-0 transition-transform duration-700 ease-in-out">
-          <button className="w-full py-2 mb-2 bg-blue-500 text-white rounded hover:bg-blue-600">
+          <button
+            onClick={handleAddToCart}
+            className="w-full py-2 mb-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+          >
             Add to Cart
           </button>
         </div>
