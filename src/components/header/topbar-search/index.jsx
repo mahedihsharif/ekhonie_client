@@ -15,8 +15,8 @@ const TopBarSearch = () => {
   const token = useSelector((state) => state.auth.jwt);
   const navigate = useNavigate();
   const [isCartOpen, setIsCartOpen] = useState(false);
-  const cartItemsCount = useSelector((state) => state.cart.totalQuantity);
-  const toggleCart = () => {
+  const { totalQuantity } = useSelector((state) => state.cart);
+  const handleCartClick = () => {
     setIsCartOpen(!isCartOpen);
   };
 
@@ -111,9 +111,9 @@ const TopBarSearch = () => {
             </div>
             <IoIosHeartEmpty className="text-3xl" />
           </div>
-          <div onClick={toggleCart} className="relative cursor-pointer">
+          <div onClick={handleCartClick} className="relative cursor-pointer">
             <div className="flex justify-center items-center absolute -top-1 -right-1 bg-[#DD3842] w-5 h-5 rounded-[50%]">
-              <span className="text-white text-[12px]"> {cartItemsCount}</span>
+              <span className="text-white text-[12px]"> {totalQuantity}</span>
             </div>
 
             <BsCart2 className="text-3xl" />
@@ -124,7 +124,7 @@ const TopBarSearch = () => {
           </div>
         </div>
       </div>
-      <Cart isOpen={isCartOpen} toggleCart={toggleCart} />
+      <Cart isOpen={isCartOpen} onClose={handleCartClick} />
     </>
   );
 };

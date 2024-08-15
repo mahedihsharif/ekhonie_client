@@ -68,7 +68,7 @@ const ProductCard = ({ product }) => {
         </div>
         <div>
           <p className="text-[#3945D4] font-semibold text-lg">
-            ${sellingPrice}{" "}
+            ${sellingPrice.toFixed(2)}{" "}
             <span className="text-[#8d979e] text-sm font-normal line-through">
               ${mrp}
             </span>

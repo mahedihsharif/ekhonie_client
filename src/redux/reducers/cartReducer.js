@@ -5,29 +5,10 @@ import {
   saveToLocalStorage,
 } from "../../utils/helpers/localStorage";
 
-// Helper functions to handle local storage
-const loadCartFromLocalStorage = () => {
-  try {
-    const serializedCart = loadFromLocalStorage("cart");
-    return serializedCart ? serializedCart : [];
-  } catch (e) {
-    console.error("Could not load cart", e);
-    return [];
-  }
-};
-
-const saveCartToLocalStorage = (cart) => {
-  try {
-    saveToLocalStorage("cart", cart);
-  } catch (e) {
-    console.error("Could not save cart", e);
-  }
-};
-
 const initialState = {
-  items: loadCartFromLocalStorage() || [],
-  totalQuantity: 0,
-  status: "idle",
+  cartItems: loadFromLocalStorage("cartItems") || [],
+  totalQuantity: loadFromLocalStorage("totalQuantity") || 0,
+  totalPrice: loadFromLocalStorage("totalPrice") || 0,
 };
 
 const cartReducer = createSlice({
@@ -36,55 +17,84 @@ const cartReducer = createSlice({
   reducers: {
     //add to cart
     addToCart: (state, action) => {
-      const product = action.payload;
-      const existingProduct = state.items.find(
-        (item) => item.id === product.id
-      );
-
-      if (existingProduct) {
-        existingProduct.quantity += 1;
+      const item = action.payload;
+      const {
+        id,
+        attributes: { sellingPrice },
+      } = item;
+      const existingItem = state.cartItems.find((i) => i.id === id);
+      if (existingItem) {
+        existingItem.quantity += 1;
+        existingItem.price += sellingPrice;
       } else {
-        state.items.push({ ...product, quantity: 1 });
+        state.cartItems.push({
+          ...item,
+          quantity: 1,
+          price: sellingPrice,
+        });
       }
-      state.totalQuantity++;
-      saveCartToLocalStorage(state.items);
+      state.totalQuantity += 1;
+      state.totalPrice += sellingPrice;
+      saveToLocalStorage("cartItems", state.cartItems);
+      saveToLocalStorage("totalQuantity", state.totalQuantity);
+      saveToLocalStorage("totalPrice", state.totalPrice);
     },
     //remove cart
     removeFromCart: (state, action) => {
-      const id = action.payload;
-      const existingItem = state.items.find((item) => item.id === id);
-
+      const item = action.payload;
+      const existingItem = state.cartItems.find((i) => i.id === item.id);
       if (existingItem) {
-        state.items = state.items.filter((item) => item.id !== id);
         state.totalQuantity -= existingItem.quantity;
+        state.totalPrice -= existingItem.price;
+        state.cartItems = state.cartItems.filter((i) => i.id !== item.id);
+        saveToLocalStorage("cartItems", state.cartItems);
+        saveToLocalStorage("totalQuantity", state.totalQuantity);
+        saveToLocalStorage("totalPrice", state.totalPrice);
       }
-      saveCartToLocalStorage(state.items);
     },
     //increase quantity
     increaseQuantity(state, action) {
-      const id = action.payload;
-      const existingItem = state.items.find((item) => item.id === id);
-
+      const item = action.payload;
+      const {
+        id,
+        attributes: { sellingPrice },
+      } = item;
+      const existingItem = state.cartItems.find((i) => i.id === id);
       if (existingItem) {
-        existingItem.quantity++;
-        state.totalQuantity++;
+        existingItem.quantity += 1;
+        existingItem.price += sellingPrice;
+        state.totalQuantity += 1;
+        state.totalPrice += sellingPrice;
+        saveToLocalStorage("cartItems", state.cartItems);
+        saveToLocalStorage("totalQuantity", state.totalQuantity);
+        saveToLocalStorage("totalPrice", state.totalPrice);
       }
-      saveCartToLocalStorage(state.items);
     },
     //decrease quantity
     decreaseQuantity(state, action) {
-      const id = action.payload;
-      const existingItem = state.items.find((item) => item.id === id);
-
+      const item = action.payload;
+      const {
+        id,
+        attributes: { sellingPrice },
+      } = item;
+      const existingItem = state.cartItems.find((i) => i.id === id);
       if (existingItem && existingItem.quantity > 1) {
-        existingItem.quantity--;
-        state.totalQuantity--;
+        existingItem.quantity -= 1;
+        existingItem.price -= sellingPrice;
+        state.totalQuantity -= 1;
+        state.totalPrice -= sellingPrice;
+        saveToLocalStorage("cartItems", state.cartItems);
+        saveToLocalStorage("totalQuantity", state.totalQuantity);
+        saveToLocalStorage("totalPrice", state.totalPrice);
       }
-      saveCartToLocalStorage(state.items);
     },
     clearCart: (state) => {
-      state.items = [];
-      saveCartToLocalStorage(state.items);
+      state.cartItems = [];
+      state.totalQuantity = 0;
+      state.totalPrice = 0;
+      saveToLocalStorage("cartItems", state.cartItems);
+      saveToLocalStorage("totalQuantity", state.totalQuantity);
+      saveToLocalStorage("totalPrice", state.totalPrice);
     },
   },
 });
