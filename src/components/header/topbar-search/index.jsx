@@ -5,6 +5,7 @@ import { IoIosHeartEmpty } from "react-icons/io";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { logout } from "../../../redux/reducers/authReducer";
+import { clearCart } from "../../../redux/reducers/cartReducer";
 import Cart from "../../cart";
 import Logo from "/assets/logo.png";
 
@@ -15,7 +16,8 @@ const TopBarSearch = () => {
   const token = useSelector((state) => state.auth.jwt);
   const navigate = useNavigate();
   const [isCartOpen, setIsCartOpen] = useState(false);
-  const { totalQuantity } = useSelector((state) => state.cart);
+  const { totalQuantity, totalPrice } = useSelector((state) => state.cart);
+
   const handleCartClick = () => {
     setIsCartOpen(!isCartOpen);
   };
@@ -30,6 +32,7 @@ const TopBarSearch = () => {
 
   const handleLogout = () => {
     dispatch(logout());
+    dispatch(clearCart());
     navigate("/login");
   };
 
@@ -120,7 +123,7 @@ const TopBarSearch = () => {
           </div>
           <div className="hidden lg:block">
             <p className="text-[13px] text-[#515D97]">Your Cart</p>
-            <p className="mt-[-5px] font-[600]">$0.00</p>
+            <p className="mt-[-5px] font-[600]">${totalPrice}</p>
           </div>
         </div>
       </div>

@@ -73,7 +73,7 @@ const Checkout = () => {
       }
     }
   };
-  console.log(orderInfo);
+
   return (
     <div className="bg-gray-100 min-h-screen flex flex-col">
       {/* Main content */}

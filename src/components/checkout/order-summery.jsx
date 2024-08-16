@@ -9,6 +9,7 @@ const OrderSummery = () => {
       <h2 className="text-lg font-semibold mb-4">Order Summary</h2>
       {cartItems.map((product) => {
         const {
+          id,
           attributes: {
             title,
             sellingPrice,
@@ -23,7 +24,7 @@ const OrderSummery = () => {
         } = product;
         return (
           <>
-            <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center justify-between mb-4" key={id}>
               <img
                 src={url}
                 alt={alternativeText}

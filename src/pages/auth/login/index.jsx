@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import useForm from "../../../hooks/useForm";
@@ -26,6 +26,7 @@ const validate = (values) => {
 
 const Login = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const dispatch = useDispatch();
 
   const {
@@ -43,7 +44,8 @@ const Login = () => {
     } else {
       try {
         dispatch(login_user(values));
-        navigate("/");
+        let from = location.state?.from?.pathname || "/";
+        navigate(from, { replace: true });
         toast.success("Account Login Successfully!");
       } catch (err) {
         console.log(err);

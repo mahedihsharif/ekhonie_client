@@ -10,6 +10,7 @@ import Register from "./pages/auth/register";
 import Home from "./pages/home";
 import Orders from "./pages/orders";
 import Products from "./pages/products";
+import PrivateRoute from "./router/private-routes";
 import Layout from "./utils/Layout";
 
 function App() {
@@ -24,8 +25,22 @@ function App() {
             <Route path="/register" element={<Register />} />
             <Route path="/products" element={<Products />} />
             <Route path="/contact" element={<Contact />} />
-            <Route path="/checkout" element={<Checkout />} />
-            <Route path="/orders" element={<Orders />} />
+            <Route
+              path="/checkout"
+              element={
+                <PrivateRoute>
+                  <Checkout />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/orders"
+              element={
+                <PrivateRoute>
+                  <Orders />
+                </PrivateRoute>
+              }
+            />
             <Route path="/products/:id" element={<ProductDetails />} />
             <Route path="/dashboard" element={<Dashboard />} />
           </Routes>

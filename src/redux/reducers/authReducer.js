@@ -28,10 +28,12 @@ export const authReducer = createSlice({
   initialState,
   reducers: {
     logout: (state) => {
-      state.user = null;
+      state.user = {};
       state.jwt = null;
       state.loader = false;
       state.errorMessage = null;
+      saveToLocalStorage("user", state.user);
+      saveToLocalStorage("token", state.jwt);
     },
   },
   extraReducers: (builder) => {

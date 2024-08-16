@@ -2,7 +2,7 @@
 import { Transition } from "@headlessui/react";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
   decreaseQuantity,
   increaseQuantity,
@@ -10,8 +10,18 @@ import {
 } from "../../redux/reducers/cartReducer";
 
 const Cart = ({ isOpen, onClose }) => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { jwt } = useSelector((state) => state.auth);
   const { cartItems, totalPrice } = useSelector((state) => state.cart);
+
+  const handleCheckout = () => {
+    if (jwt) {
+      navigate("/checkout");
+    }
+    navigate("/login");
+    onClose();
+  };
 
   return (
     <Transition
@@ -36,7 +46,6 @@ const Cart = ({ isOpen, onClose }) => {
                   id,
                   attributes: {
                     title,
-                    sellingPrice,
                     images: {
                       data: {
                         attributes: { url, alternativeText },
@@ -90,11 +99,13 @@ const Cart = ({ isOpen, onClose }) => {
               <span>Total:</span>
               <span className="font-semibold mb-10">${totalPrice}</span>
             </div>
-            <Link to={"/checkout"}>
-              <button className="w-full mt-4 py-2 bg-blue-500 text-white rounded">
-                Checkout
-              </button>
-            </Link>
+
+            <button
+              className="w-full mt-4 py-2 bg-blue-500 text-white rounded"
+              onClick={handleCheckout}
+            >
+              Checkout
+            </button>
           </div>
         </div>
         <button
