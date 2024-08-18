@@ -1,11 +1,14 @@
 import React from "react";
 import { GoEye } from "react-icons/go";
 import { TiStarFullOutline } from "react-icons/ti";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+import { addToCart } from "../../../redux/reducers/cartReducer";
 
 const ProductDetails = () => {
   const { id } = useParams();
+  const dispatch = useDispatch();
+  const token = useSelector((state) => state.auth.jwt);
   const product = useSelector((state) =>
     state.products.items.find((item) => item.id === parseInt(id))
   );
@@ -18,9 +21,7 @@ const ProductDetails = () => {
       sellingPrice,
       tags,
       quantity,
-      soldQuantity,
       availability,
-      offer,
       category: {
         data: {
           attributes: { title: catTitle },
@@ -34,6 +35,17 @@ const ProductDetails = () => {
       },
     },
   } = product;
+
+  const handleAddToCart = () => {
+    dispatch(addToCart(product));
+  };
+  const handleCheckout = () => {
+    if (!token) {
+      navigate("/login");
+    } else {
+      navigate("/order-summery");
+    }
+  };
   return (
     <div className="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-md mt-10">
       <div className="flex flex-col md:flex-row">
@@ -64,10 +76,17 @@ const ProductDetails = () => {
             {quantity} Products are available
           </p>
           <div className="mt-12 border-b-[1.5px] pb-5">
-            <button className="px-10 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition">
+            <button
+              onClick={handleAddToCart}
+              className="px-10 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
+            >
               Add to Cart
             </button>
-            <button className="px-10 ml-5 py-2 bg-gray-800 text-white rounded hover:bg-gray-700 transition">
+            <button
+              onClick={handleCheckout}
+              className="px-10 ml-5 py-2 bg-gray-800 text-white rounded hover:bg-gray-700 transition"
+              disabled={true}
+            >
               Buy Now
             </button>
           </div>

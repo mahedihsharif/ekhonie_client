@@ -4,7 +4,6 @@ import Slider from "react-slick";
 import { BeatLoader } from "react-spinners";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
-import useData from "../../../hooks/useData";
 import { get_category } from "../../../redux/reducers/categoryReducer";
 import { sliderSettings } from "../../../settings/slider-settings";
 import Cat from "./Cat";
@@ -12,8 +11,9 @@ import Cat from "./Cat";
 const Category = () => {
   const dispatch = useDispatch();
   const [settings, useSettings] = useState(null);
-  const categories = useSelector((state) => state.categories);
-  const { data: catData, loading, error } = useData(categories);
+  const { items, loader, errorMessage } = useSelector(
+    (state) => state.categories
+  );
 
   useEffect(() => {
     dispatch(get_category());
@@ -26,7 +26,7 @@ const Category = () => {
 
   return (
     <div className="container mx-auto pt-8">
-      {loading ? (
+      {loader ? (
         <BeatLoader
           color="#0043b4"
           cssOverride={{ marginLeft: "50%", marginTop: "2%" }}
@@ -39,7 +39,8 @@ const Category = () => {
         <>
           {settings && (
             <Slider {...settings}>
-              {catData && catData.map((cat) => <Cat key={cat.id} cat={cat} />)}
+              {items.length > 0 &&
+                items.map((cat) => <Cat key={cat.id} cat={cat} />)}
             </Slider>
           )}
         </>

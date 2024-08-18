@@ -2,15 +2,15 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import Slider from "react-slick";
 import { BeatLoader } from "react-spinners";
-import useData from "../../../hooks/useData";
 import { sliderSettings } from "../../../settings/slider-settings";
 import LargeCard from "../../shared/large-card";
 import ProductCard from "../../shared/product-card";
 
 const FeaturedProducts = () => {
   const [settings, useSettings] = useState(null);
-  const products = useSelector((state) => state.products);
-  const { data: productsData, loading, error } = useData(products);
+  const { items, loader, errorMessage } = useSelector(
+    (state) => state.products
+  );
 
   useEffect(() => {
     const sliderData = sliderSettings(6, 4, 2, 1);
@@ -22,7 +22,7 @@ const FeaturedProducts = () => {
       <LargeCard featured={"featured products"} btnText={"view all products"} />
 
       <div className="mt-3">
-        {loading ? (
+        {loader ? (
           <BeatLoader
             color="#0043b4"
             cssOverride={{ marginLeft: "40%", marginTop: "8%" }}
@@ -35,8 +35,8 @@ const FeaturedProducts = () => {
           <>
             {settings && (
               <Slider {...settings}>
-                {productsData &&
-                  productsData.map((product) => (
+                {items.length > 0 &&
+                  items.map((product) => (
                     <ProductCard key={product.id} product={product} />
                   ))}
               </Slider>

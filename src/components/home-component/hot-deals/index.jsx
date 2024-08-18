@@ -6,7 +6,6 @@ import Slider from "react-slick";
 import { BeatLoader } from "react-spinners";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
-import useData from "../../../hooks/useData";
 import { get_products } from "../../../redux/reducers/productReducer";
 import { sliderSettings } from "../../../settings/slider-settings";
 import LargeCard from "../../shared/large-card";
@@ -17,8 +16,9 @@ const HotDeals = () => {
   const dispatch = useDispatch();
   const date = format(new Date(), "hh:mm:ss");
   const [settings, useSettings] = useState(null);
-  const products = useSelector((state) => state.products);
-  const { data: productsData, loading, error } = useData(products);
+  const { items, loader, errorMessage } = useSelector(
+    (state) => state.products
+  );
 
   useEffect(() => {
     dispatch(get_products());
@@ -44,7 +44,7 @@ const HotDeals = () => {
         </div>
 
         <div className="w-full md:w-[70%] mt-3 md:mt-0 container mx-auto">
-          {loading ? (
+          {loader ? (
             <BeatLoader
               color="#0043b4"
               cssOverride={{ marginLeft: "40%", marginTop: "15%" }}
@@ -57,8 +57,8 @@ const HotDeals = () => {
             <>
               {settings && (
                 <Slider {...settings}>
-                  {productsData &&
-                    productsData.map((product) => (
+                  {items.length > 0 &&
+                    items.map((product) => (
                       <ProductCard key={product.id} product={product} />
                     ))}
                 </Slider>

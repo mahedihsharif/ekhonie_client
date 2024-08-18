@@ -40,7 +40,13 @@ const Login = () => {
 
   const submit = ({ hasError, error, values }) => {
     if (hasError) {
-      toast.error("Input Field is Empty!");
+      if (!error.identifier) {
+        toast.error(error.password);
+      } else if (!error.password) {
+        toast.error(error.identifier);
+      } else {
+        toast.error("Input Field is Empty!");
+      }
     } else {
       try {
         dispatch(login_user(values));
