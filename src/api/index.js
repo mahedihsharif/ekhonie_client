@@ -33,3 +33,18 @@ export const loginUser = async (userInfo) => {
   const data = res.data;
   return data;
 };
+
+export const createOrders = async (cartItems, token) => {
+  const res = await axios.post(
+    `${httpRequest.url}/orders`,
+    { cartItems },
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+  const data = res.data;
+  return data;
+};

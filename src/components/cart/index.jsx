@@ -12,14 +12,16 @@ import {
 const Cart = ({ isOpen, onClose }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { jwt } = useSelector((state) => state.auth);
+  const token = useSelector((state) => state.auth.jwt);
   const { cartItems, totalPrice } = useSelector((state) => state.cart);
 
   const handleCheckout = () => {
-    if (jwt) {
-      navigate("/checkout");
+    if (!token) {
+      navigate("/login");
+    } else {
+      navigate("/order-summery");
     }
-    navigate("/login");
+
     onClose();
   };
 

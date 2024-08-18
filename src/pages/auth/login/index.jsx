@@ -44,7 +44,7 @@ const Login = () => {
     } else {
       try {
         dispatch(login_user(values));
-        let from = location.state?.from?.pathname || "/";
+        const from = location.state?.from?.pathname || "/";
         navigate(from, { replace: true });
         toast.success("Account Login Successfully!");
       } catch (err) {
