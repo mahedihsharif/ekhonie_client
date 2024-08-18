@@ -46,5 +46,6 @@ export const createOrders = async (cartItems, token) => {
     }
   );
   const data = res.data;
+  console.log(data);
   return data;
 };
