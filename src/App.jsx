@@ -1,4 +1,5 @@
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import ScrollToTop from "react-scroll-to-top";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import OrderSummery from "./components/checkout";
@@ -34,6 +35,16 @@ function App() {
           </Routes>
         </Layout>
       </Router>
+      <ScrollToTop
+        smooth
+        color="#1D4ED8"
+        height="17px"
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      />
     </>
   );
 }
