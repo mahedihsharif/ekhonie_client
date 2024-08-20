@@ -53,9 +53,7 @@ const Products = () => {
     <div className="flex px-5 2xl:px-60 bg-[#F1F5F6] py-5">
       <Sidebar onFilterChange={handleFilterChange} />
       <div>
-        <h1 className="text-center mb-5">
-          Products/{`${category?.attributes?.title}`}
-        </h1>
+        <h1 className="text-center mb-5">Products</h1>
         <div className="w-4/4 p-2 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3  lg:grid-cols-4 gap-2">
           {filteredProducts.map((product) => (
             <ProductCard key={product.id} product={product} />
