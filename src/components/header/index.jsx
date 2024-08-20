@@ -6,12 +6,12 @@ import TopBarSearch from "./topbar-search";
 
 const Header = () => {
   return (
-    <>
+    <div>
       <TopBar />
       <TopBarBottom />
       <TopBarSearch />
       <Navbar />
-    </>
+    </div>
   );
 };
 

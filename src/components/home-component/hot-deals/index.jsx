@@ -43,7 +43,7 @@ const HotDeals = () => {
           <img src={HotDealImage} alt="hot-deals" className="h-full" />
         </div>
 
-        <div className="w-full md:w-[70%] mt-3 md:mt-0 container mx-auto">
+        <div className="w-full md:w-[70%] mt-3 md:mt-0 container">
           {loader ? (
             <BeatLoader
               color="#0043b4"

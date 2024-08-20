@@ -21,7 +21,7 @@ const TopBarSearch = () => {
   const { totalQuantity, totalPrice } = useSelector((state) => state.cart);
   const items = useSelector((state) => state.categories.items);
   const products = useSelector((state) => state.products.items);
-  console.log(selectedCategory);
+
   const handleCartClick = () => {
     setIsCartOpen(!isCartOpen);
   };

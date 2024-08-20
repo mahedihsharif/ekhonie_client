@@ -1,6 +1,7 @@
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { BeatLoader } from "react-spinners";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import useForm from "../../../hooks/useForm";
@@ -28,6 +29,7 @@ const Login = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
+  const { loader } = useSelector((state) => state.auth);
 
   const {
     formState,
@@ -50,8 +52,8 @@ const Login = () => {
     } else {
       try {
         dispatch(login_user(values));
-        const from = location.state?.from?.pathname || "/";
-        navigate(from, { replace: true });
+        // const from = location.state?.from?.pathname || "/";
+        navigate("/");
         toast.success("Account Login Successfully!");
       } catch (err) {
         console.log(err);
@@ -114,7 +116,17 @@ const Login = () => {
               type="submit"
               className="w-full font-normal px-4 py-2 text-white bg-blue-700 rounded-lg hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400"
             >
-              Login
+              Login{" "}
+              {loader && (
+                <BeatLoader
+                  color="#10e3d0"
+                  cssOverride={{ marginLeft: "5%" }}
+                  margin={3}
+                  loading
+                  size={10}
+                  speedMultiplier={1}
+                />
+              )}
             </button>
           </form>
         </div>

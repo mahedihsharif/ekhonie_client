@@ -17,7 +17,7 @@ const Cat = ({ cat }) => {
   } = cat;
 
   const handleCategory = () => {
-    navigate(`/products/${id}`);
+    navigate(`/category/${id}`);
   };
 
   return (
