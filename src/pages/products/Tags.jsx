@@ -3,11 +3,17 @@ import { useSelector } from "react-redux";
 
 const Tags = ({ onFilterChange }) => {
   const allTags = useSelector((state) => state.products.items);
+  const filteredTags = allTags.filter(
+    (item, index, self) =>
+      index ===
+      self.findIndex((t) => t.attributes.tags === item.attributes.tags)
+  );
+
   return (
     <div>
       <h3 className="text-lg font-medium mb-2">Tags</h3>
       <ul>
-        {allTags.map((tag) => {
+        {filteredTags.map((tag) => {
           const {
             id,
             attributes: { tags },
