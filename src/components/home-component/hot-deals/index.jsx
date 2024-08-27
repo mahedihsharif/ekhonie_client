@@ -21,8 +21,10 @@ const HotDeals = () => {
   );
 
   useEffect(() => {
-    dispatch(get_products());
-  }, [dispatch]);
+    if (loader) {
+      dispatch(get_products());
+    }
+  }, [dispatch, loader]);
 
   useEffect(() => {
     const sliderData = sliderSettings(4, 3, 2, 1);

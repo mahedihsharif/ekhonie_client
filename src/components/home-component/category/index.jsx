@@ -16,8 +16,10 @@ const Category = () => {
   );
 
   useEffect(() => {
-    dispatch(get_category());
-  }, [dispatch]);
+    if (loader) {
+      dispatch(get_category());
+    }
+  }, [dispatch, loader]);
 
   useEffect(() => {
     const sliderData = sliderSettings(8, 4, 3, 2);

@@ -12,7 +12,9 @@ const Blogs = () => {
   const { items, loader } = useSelector((state) => state.blogs);
 
   useEffect(() => {
-    dispatch(get_blogs());
+    if (loader) {
+      dispatch(get_blogs());
+    }
   }, [dispatch]);
 
   useEffect(() => {
