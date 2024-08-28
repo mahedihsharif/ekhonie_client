@@ -13,22 +13,16 @@ const ProductCard = ({ product }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const {
-    id,
-    attributes: {
-      title,
-      mrp,
-      sellingPrice,
-      quantity,
-      soldQuantity,
-      availability,
-      offer,
-      reviews,
-      images: {
-        data: {
-          attributes: { alternativeText, url },
-        },
-      },
-    },
+    _id,
+    title,
+    file,
+    price,
+    mrp,
+    reviews,
+    availability,
+    quantity,
+    soldQuantity,
+    offer,
   } = product;
 
   const openModal = () => setIsModalOpen(true);
@@ -47,7 +41,7 @@ const ProductCard = ({ product }) => {
               <span className="text-white text-[12px]">{offer}%</span>
             </div>
           )}
-          <img src={url} alt={alternativeText} className="h-52" />
+          <img src={file} alt={title} className="h-52" />
           <div className="absolute top-0 right-0 p-4  transform translate-x-full group-hover:translate-x-0 transition-transform duration-700 ease-in-out">
             <div className="border-[1px] w-full h-full rounded-full p-[0.3rem]">
               <IoIosHeartEmpty className="text-md text-[#626363] " />
@@ -65,7 +59,7 @@ const ProductCard = ({ product }) => {
         </figure>
         <div className="card-body">
           <h2 className="card-title text-sm font-semibold leading-5 hover:text-[#3945D4] transition-all duration-75">
-            <Link to={`/products/${id}`}>{title}</Link>
+            <Link to={`/products/${_id}`}>{title}</Link>
           </h2>
           <div className="card-actions">
             <TiStarFullOutline className="text-[#FFC93D] text-lg font-bold" />
@@ -77,7 +71,7 @@ const ProductCard = ({ product }) => {
           </div>
           <div>
             <p className="text-[#3945D4] font-semibold text-lg">
-              ${sellingPrice.toFixed(2)}{" "}
+              ${price.toFixed(2)}{" "}
               <span className="text-[#8d979e] text-sm font-normal line-through">
                 ${mrp}
               </span>

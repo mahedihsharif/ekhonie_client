@@ -1,5 +1,5 @@
 const httpRequest = {
-  url: "https://ekhonie.onrender.com/api",
+  url: "https://ekhonie-server.onrender.com/api",
 };
 
 export default httpRequest;

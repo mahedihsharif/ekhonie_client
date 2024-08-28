@@ -9,15 +9,15 @@ export const login_user = createAsyncThunk(
   "auth/login_user",
   async (userData) => {
     const users = await loginUser(userData);
+    saveToLocalStorage("token", users.token);
     saveToLocalStorage("user", users.user);
-    saveToLocalStorage("token", users.jwt);
     return users;
   }
 );
 
 //initial state
 const initialState = {
-  jwt: loadFromLocalStorage("token") || null,
+  token: loadFromLocalStorage("token") || null,
   user: loadFromLocalStorage("user") || {},
   loader: false,
   errorMessage: "",
@@ -33,7 +33,7 @@ export const authReducer = createSlice({
       state.loader = false;
       state.errorMessage = null;
       saveToLocalStorage("user", state.user);
-      saveToLocalStorage("token", state.jwt);
+      saveToLocalStorage("token", state.token);
     },
   },
   extraReducers: (builder) => {
@@ -44,7 +44,7 @@ export const authReducer = createSlice({
       })
       .addCase(login_user.fulfilled, (state, action) => {
         state.loader = false;
-        state.jwt = action.payload.jwt;
+        state.token = action.payload.token;
         state.user = action.payload.user;
       })
       .addCase(login_user.rejected, (state, action) => {

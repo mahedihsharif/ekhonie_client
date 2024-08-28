@@ -3,7 +3,7 @@ import { getCategories } from "../../api/index";
 import {
   loadFromLocalStorage,
   saveToLocalStorage,
-} from "../../utils/helpers/localStorage";
+} from "./../../utils/helpers/localStorage";
 
 export const get_category = createAsyncThunk(
   "categories/get_category",
@@ -31,12 +31,12 @@ export const categoryReducer = createSlice({
         state.loader = true;
       })
       .addCase(get_category.fulfilled, (state, action) => {
-        state.items = action.payload;
         state.loader = false;
+        state.items = action.payload;
       })
       .addCase(get_category.rejected, (state, action) => {
-        state.errorMessage = action.error.message;
         state.loader = false;
+        state.errorMessage = action.error.message;
       });
   },
 });

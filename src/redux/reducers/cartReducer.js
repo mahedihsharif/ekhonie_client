@@ -18,23 +18,20 @@ const cartReducer = createSlice({
     //add to cart
     addToCart: (state, action) => {
       const item = action.payload;
-      const {
-        id,
-        attributes: { sellingPrice },
-      } = item;
-      const existingItem = state.cartItems.find((i) => i.id === id);
+      const { _id, price } = item;
+      const existingItem = state.cartItems.find((i) => i._id === _id);
       if (existingItem) {
-        existingItem.quantity += 1;
-        existingItem.price += sellingPrice;
+        existingItem.cartQuantity += 1;
+        existingItem.cartPrice += price;
       } else {
         state.cartItems.push({
           ...item,
-          quantity: 1,
-          price: sellingPrice,
+          cartQuantity: 1,
+          cartPrice: price,
         });
       }
       state.totalQuantity += 1;
-      state.totalPrice += sellingPrice;
+      state.totalPrice += price;
       saveToLocalStorage("cartItems", state.cartItems);
       saveToLocalStorage("totalQuantity", state.totalQuantity);
       saveToLocalStorage("totalPrice", state.totalPrice);
@@ -42,11 +39,11 @@ const cartReducer = createSlice({
     //remove cart
     removeFromCart: (state, action) => {
       const item = action.payload;
-      const existingItem = state.cartItems.find((i) => i.id === item.id);
+      const existingItem = state.cartItems.find((i) => i._id === item._id);
       if (existingItem) {
-        state.totalQuantity -= existingItem.quantity;
-        state.totalPrice -= existingItem.price;
-        state.cartItems = state.cartItems.filter((i) => i.id !== item.id);
+        state.totalQuantity -= existingItem.cartQuantity;
+        state.totalPrice -= existingItem.cartPrice;
+        state.cartItems = state.cartItems.filter((i) => i._id !== item._id);
         saveToLocalStorage("cartItems", state.cartItems);
         saveToLocalStorage("totalQuantity", state.totalQuantity);
         saveToLocalStorage("totalPrice", state.totalPrice);
@@ -55,16 +52,13 @@ const cartReducer = createSlice({
     //increase quantity
     increaseQuantity(state, action) {
       const item = action.payload;
-      const {
-        id,
-        attributes: { sellingPrice },
-      } = item;
-      const existingItem = state.cartItems.find((i) => i.id === id);
+      const { _id, price } = item;
+      const existingItem = state.cartItems.find((i) => i._id === _id);
       if (existingItem) {
-        existingItem.quantity += 1;
-        existingItem.price += sellingPrice;
+        existingItem.cartQuantity += 1;
+        existingItem.cartPrice += price;
         state.totalQuantity += 1;
-        state.totalPrice += sellingPrice;
+        state.totalPrice += price;
         saveToLocalStorage("cartItems", state.cartItems);
         saveToLocalStorage("totalQuantity", state.totalQuantity);
         saveToLocalStorage("totalPrice", state.totalPrice);
@@ -73,16 +67,13 @@ const cartReducer = createSlice({
     //decrease quantity
     decreaseQuantity(state, action) {
       const item = action.payload;
-      const {
-        id,
-        attributes: { sellingPrice },
-      } = item;
-      const existingItem = state.cartItems.find((i) => i.id === id);
-      if (existingItem && existingItem.quantity > 1) {
-        existingItem.quantity -= 1;
-        existingItem.price -= sellingPrice;
+      const { _id, price } = item;
+      const existingItem = state.cartItems.find((i) => i._id === _id);
+      if (existingItem && existingItem.cartQuantity > 1) {
+        existingItem.cartQuantity -= 1;
+        existingItem.cartPrice -= price;
         state.totalQuantity -= 1;
-        state.totalPrice -= sellingPrice;
+        state.totalPrice -= price;
         saveToLocalStorage("cartItems", state.cartItems);
         saveToLocalStorage("totalQuantity", state.totalQuantity);
         saveToLocalStorage("totalPrice", state.totalPrice);

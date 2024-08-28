@@ -10,19 +10,13 @@ const Products = () => {
   const { id } = useParams();
 
   const categories = useSelector((state) => state.categories.items);
-  const category = categories.find((cat) => cat.id === parseInt(id));
+  const category = categories.find((cat) => cat._id === id);
 
   const filteredProducts = products.filter((product) => {
     const {
-      attributes: {
-        category: {
-          data: {
-            attributes: { title },
-          },
-        },
-        sellingPrice,
-        tags,
-      },
+      category: { title },
+      price,
+      tags,
     } = product;
     return (
       (filters.category.length === 0 || filters.category.includes(title)) &&
@@ -30,9 +24,9 @@ const Products = () => {
         filters.price.some((priceRange) => {
           const [min, max] = priceRange.split("-").map(Number);
           console.log(min, max);
-          return sellingPrice >= min && sellingPrice <= max;
+          return price >= min && price <= max;
         })) &&
-      (filters.tag.length === 0 || filters.tag.includes(tags))
+      (filters.tag.length === 0 || filters.tag.includes(tags[0]))
     );
   });
 
@@ -56,7 +50,7 @@ const Products = () => {
         <h1 className="text-center mb-5">Products</h1>
         <div className="w-4/4 p-2 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3  lg:grid-cols-4 gap-2">
           {filteredProducts.map((product) => (
-            <ProductCard key={product.id} product={product} />
+            <ProductCard key={product._id} product={product} />
           ))}
         </div>
       </div>

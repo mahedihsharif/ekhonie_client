@@ -21,10 +21,8 @@ const HotDeals = () => {
   );
 
   useEffect(() => {
-    if (loader) {
-      dispatch(get_products());
-    }
-  }, [dispatch, loader]);
+    dispatch(get_products());
+  }, [dispatch]);
 
   useEffect(() => {
     const sliderData = sliderSettings(4, 3, 2, 1);
@@ -61,7 +59,7 @@ const HotDeals = () => {
                 <Slider {...settings}>
                   {items.length > 0 &&
                     items.map((product) => (
-                      <ProductCard key={product.id} product={product} />
+                      <ProductCard key={product._id} product={product} />
                     ))}
                 </Slider>
               )}

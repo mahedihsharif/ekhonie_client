@@ -8,32 +8,22 @@ import { addToCart } from "../../../redux/reducers/cartReducer";
 const ProductDetails = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
-  const token = useSelector((state) => state.auth.jwt);
+  const token = useSelector((state) => state.auth.token);
   const product = useSelector((state) =>
-    state.products.items.find((item) => item.id === parseInt(id))
+    state.products.items.find((item) => item._id === id)
   );
   const {
-    attributes: {
-      title,
-      shortDescription,
-      description,
-      mrp,
-      sellingPrice,
-      tags,
-      quantity,
-      availability,
-      category: {
-        data: {
-          attributes: { title: catTitle },
-        },
-      },
-      reviews,
-      images: {
-        data: {
-          attributes: { alternativeText, url },
-        },
-      },
-    },
+    title,
+    shortDescription,
+    description,
+    file,
+    reviews,
+    price,
+    mrp,
+    quantity,
+    availability,
+    tags,
+    category: { title: catTitle },
   } = product;
 
   const handleAddToCart = () => {
@@ -50,7 +40,7 @@ const ProductDetails = () => {
     <div className="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-md mt-10">
       <div className="flex flex-col md:flex-row">
         <div className="md:w-1/2">
-          <img src={url} alt={alternativeText} className="rounded-lg" />
+          <img src={file} alt={title} className="rounded-lg" />
         </div>
         <div className="md:w-1/2 md:ml-6 mt-2 md:mt-0 ">
           <h1 className="text-3xl font-bold mb-2">{title}</h1>
@@ -63,7 +53,7 @@ const ProductDetails = () => {
             <p className="ml-2 font-medium">{reviews} review</p>
           </div>
           <p className="text-2xl font-semibold mb-4 text-blue-700">
-            ${sellingPrice}
+            ${price}
             <span className="text-[#88898a] text-sm font-normal ml-2 line-through">
               ${mrp}
             </span>
@@ -101,7 +91,7 @@ const ProductDetails = () => {
               Category: <span className="text-gray-800">{catTitle}</span>
             </p>
             <p className="text-[#515D66] font-medium">
-              Tags: <span className="font-normal">{tags}</span>
+              Tags: <span className="font-normal">{tags[0]}</span>
             </p>
           </div>
         </div>

@@ -12,7 +12,7 @@ import {
 const Cart = ({ isOpen, onClose }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const token = useSelector((state) => state.auth.jwt);
+  const token = useSelector((state) => state.auth.token);
   const { cartItems, totalPrice } = useSelector((state) => state.cart);
 
   const handleCheckout = () => {
@@ -44,26 +44,14 @@ const Cart = ({ isOpen, onClose }) => {
           ) : (
             <ul>
               {cartItems.map((item) => {
-                const {
-                  id,
-                  attributes: {
-                    title,
-                    images: {
-                      data: {
-                        attributes: { url, alternativeText },
-                      },
-                    },
-                  },
-                  quantity,
-                  price,
-                } = item;
+                const { _id, title, file, cartQuantity, cartPrice } = item;
                 return (
                   <li
-                    key={id}
+                    key={_id}
                     className="flex justify-between items-center mb-4"
                   >
                     <div>
-                      <img src={url} alt={alternativeText} className="w-16" />
+                      <img src={file} alt="" className="w-16" />
                       <h3 className="text-sm font-normal">{title}</h3>
                       <p className="text-gray-500 mt-4 ">
                         Qty:{" "}
@@ -74,7 +62,7 @@ const Cart = ({ isOpen, onClose }) => {
                           -
                         </button>
                         <button className="ml-2 px-4 text-md font-semibold rounded-sm bg-[#F1F5F6] border">
-                          {quantity}
+                          {cartQuantity}
                         </button>
                         <button
                           onClick={() => dispatch(increaseQuantity(item))}
@@ -83,7 +71,7 @@ const Cart = ({ isOpen, onClose }) => {
                           +
                         </button>
                       </p>
-                      <p>${price.toFixed(2)}</p>
+                      <p>${cartPrice.toFixed(2)}</p>
                     </div>
                     <button
                       onClick={() => dispatch(removeFromCart(item))}

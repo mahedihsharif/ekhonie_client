@@ -12,9 +12,7 @@ const Blogs = () => {
   const { items, loader } = useSelector((state) => state.blogs);
 
   useEffect(() => {
-    if (loader) {
-      dispatch(get_blogs());
-    }
+    dispatch(get_blogs());
   }, [dispatch]);
 
   useEffect(() => {
@@ -38,7 +36,7 @@ const Blogs = () => {
           {settings && (
             <Slider {...settings}>
               {items.length > 0 &&
-                items.map((blog) => <BlogCard key={blog.id} blog={blog} />)}
+                items.map((blog) => <BlogCard key={blog._id} blog={blog} />)}
             </Slider>
           )}
         </>

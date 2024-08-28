@@ -9,11 +9,9 @@ const Category = ({ onFilterChange }) => {
       <h3 className="text-lg font-medium mb-2">Categories</h3>
       <ul>
         {categories.map((cat) => {
-          const {
-            attributes: { title, products },
-          } = cat;
+          const { title, totalProducts } = cat;
           return (
-            <li key={cat.id} className="mt-1">
+            <li key={cat._id} className="mt-1">
               <input
                 type="checkbox"
                 id="cat"
@@ -23,7 +21,7 @@ const Category = ({ onFilterChange }) => {
                 value={title}
               />
               <label htmlFor="cat1" className="ml-2">
-                {title} ({products})
+                {title} ({totalProducts})
               </label>
             </li>
           );

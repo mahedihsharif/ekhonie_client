@@ -15,7 +15,7 @@ const TopBarSearch = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
   const user = useSelector((state) => state.auth.user);
-  const token = useSelector((state) => state.auth.jwt);
+  const token = useSelector((state) => state.auth.token);
   const navigate = useNavigate();
   const [isCartOpen, setIsCartOpen] = useState(false);
   const { totalQuantity, totalPrice } = useSelector((state) => state.cart);
@@ -50,14 +50,8 @@ const TopBarSearch = () => {
 
   const filteredProducts = products.filter((product) => {
     const {
-      attributes: {
-        title,
-        category: {
-          data: {
-            attributes: { title: catTitle },
-          },
-        },
-      },
+      title,
+      category: { title: catTitle },
     } = product;
     return (
       title.toLowerCase().includes(searchQuery.toLowerCase()) &&
@@ -86,12 +80,9 @@ const TopBarSearch = () => {
                 <option value="">All Categories</option>
                 {items.length > 0 &&
                   items.map((cat) => {
-                    const {
-                      id,
-                      attributes: { title },
-                    } = cat;
+                    const { _id, title } = cat;
                     return (
-                      <option key={id} value={title}>
+                      <option key={_id} value={title}>
                         {title}
                       </option>
                     );
@@ -114,36 +105,23 @@ const TopBarSearch = () => {
           <div className="2xl:w-[35%] xl:w-[51%] lg:w-[56%] max-md:w-full max-md:w-[80%]: max-md:left-0  z-50 absolute shadow-lg bg-[#F1F5F6]">
             {filteredProducts.length > 0 &&
               filteredProducts.map((product) => {
-                const {
-                  id,
-                  attributes: {
-                    title,
-
-                    sellingPrice,
-
-                    images: {
-                      data: {
-                        attributes: { alternativeText, url },
-                      },
-                    },
-                  },
-                } = product;
+                const { _id, title, file, price } = product;
 
                 return (
                   <div
-                    key={id}
+                    key={_id}
                     className="flex items-center justify-between p-4 border-b border-gray-200"
                   >
                     <img
-                      src={url}
-                      alt={alternativeText}
+                      src={file}
+                      alt=""
                       className="w-16 h-16 object-cover rounded-md"
                     />
                     <div className="ml-4 flex-1">
                       <h4 className="text-lg font-medium">{title}</h4>
                       <div className="flex items-center">
                         <span className="text-red-600 text-lg font-semibold">
-                          {sellingPrice}
+                          {price}
                         </span>
                       </div>
                     </div>

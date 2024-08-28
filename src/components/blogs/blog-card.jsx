@@ -1,22 +1,13 @@
+import moment from "moment";
 import React from "react";
 
 const BlogCard = ({ blog }) => {
-  const {
-    attributes: {
-      title,
-      description,
-      blogDate,
-      images: {
-        data: {
-          attributes: { alternativeText, url },
-        },
-      },
-    },
-  } = blog;
+  const { title, description, file, date } = blog;
+  const formattedDate = moment(date).format("MMM Do YY");
   return (
     <div className="card bg-base-100 shadow-sm cursor-pointer md:mt-0 mt-3 hover:scale-105 hover:shadow-md transition-all ease-in-out ml-3 max-sm:ml-0">
       <figure>
-        <img src={url} alt={alternativeText} />
+        <img src={file} alt="" />
       </figure>
       <div className="card-body">
         <h2 className="card-title text-base font-semibold hover:text-[#3945D4] transition-all duration-75">
@@ -33,7 +24,9 @@ const BlogCard = ({ blog }) => {
           <button className="uppercase text-[12px] font-bold cursor-pointer hover:text-[#3945D4]">
             read more
           </button>
-          <p className="text-[12px] font-medium text-[#8d979e]">{blogDate}</p>
+          <p className="text-[12px] font-medium text-[#8d979e]">
+            {formattedDate}
+          </p>
         </div>
       </div>
     </div>

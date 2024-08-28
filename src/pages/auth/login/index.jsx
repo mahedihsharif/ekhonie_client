@@ -8,14 +8,14 @@ import useForm from "../../../hooks/useForm";
 import { login_user } from "../../../redux/reducers/authReducer";
 
 const init = {
-  identifier: "",
+  email: "",
   password: "",
 };
 
 const validate = (values) => {
   const errors = {};
-  if (!values.identifier) {
-    errors.identifier = "Email is Required";
+  if (!values.email) {
+    errors.email = "Email is Required";
   }
   if (!values.password) {
     errors.password = "Password is Required";
@@ -42,10 +42,10 @@ const Login = () => {
 
   const submit = ({ hasError, error, values }) => {
     if (hasError) {
-      if (!error.identifier) {
+      if (!error.email) {
         toast.error(error.password);
       } else if (!error.password) {
-        toast.error(error.identifier);
+        toast.error(error.email);
       } else {
         toast.error("Input Field is Empty!");
       }
@@ -79,19 +79,17 @@ const Login = () => {
               </label>
               <input
                 type={"text"}
-                value={formState.identifier.value}
+                value={formState.email.value}
                 label={"Email"}
-                name={"identifier"}
+                name={"email"}
                 placeholder={"Email Address"}
                 onChange={handleChange}
                 onFocus={handleFocus}
                 onBlur={handleBlur}
                 className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
               />
-              {formState.identifier.error && (
-                <span className="text-red-700">
-                  {formState.identifier.error}
-                </span>
+              {formState.email.error && (
+                <span className="text-red-700">{formState.email.error}</span>
               )}
             </div>
             <div>

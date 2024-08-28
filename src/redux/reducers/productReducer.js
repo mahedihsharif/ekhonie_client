@@ -3,7 +3,7 @@ import { getProducts } from "../../api/index";
 import {
   loadFromLocalStorage,
   saveToLocalStorage,
-} from "../../utils/helpers/localStorage";
+} from "./../../utils/helpers/localStorage";
 
 export const get_products = createAsyncThunk(
   "products/get_products",

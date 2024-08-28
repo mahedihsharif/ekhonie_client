@@ -7,7 +7,6 @@ import useForm from "../../../hooks/useForm";
 const init = {
   firstName: "",
   lastName: "",
-  username: "",
   email: "",
   password: "",
 };
@@ -24,11 +23,7 @@ const validate = (values) => {
   } else if (values.lastName.length < 2) {
     errors.lastName = "Last Name Must be upto 3 Characters";
   }
-  if (!values.username) {
-    errors.username = "Username is Required";
-  } else if (values.username.length < 5) {
-    errors.username = "Username Must be upto 5 Characters";
-  }
+
   if (!values.email) {
     errors.email = "Email is Required";
   }
@@ -123,24 +118,7 @@ const Register = () => {
                 <span className="text-red-700">{formState.lastName.error}</span>
               )}
             </div>
-            <div>
-              <label className="block mb-1 text-md font-medium text-gray-700">
-                Username
-              </label>
-              <input
-                type={"text"}
-                value={formState.username.value}
-                name={"username"}
-                placeholder={"Username"}
-                onChange={handleChange}
-                onFocus={handleFocus}
-                onBlur={handleBlur}
-                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
-              />
-              {formState.username.error && (
-                <span className="text-red-700">{formState.username.error}</span>
-              )}
-            </div>
+
             <div>
               <label className="block mb-1 text-md font-medium text-gray-700">
                 Email

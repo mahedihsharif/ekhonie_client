@@ -6,7 +6,7 @@ import { clearCart } from "../../redux/reducers/cartReducer";
 
 const OrderSummery = () => {
   const { cartItems, totalPrice } = useSelector((state) => state.cart);
-  const token = useSelector((state) => state.auth.jwt);
+  const token = useSelector((state) => state.auth.token);
   const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
   const dispatch = useDispatch();
 
@@ -15,10 +15,10 @@ const OrderSummery = () => {
       const stripe = await stripePromise;
       const orders = createOrders(cartItems, token);
       orders.then(async (res) => {
-        if (res.stripeSession.id) {
+        if (res.id) {
           dispatch(clearCart());
           await stripe.redirectToCheckout({
-            sessionId: res.stripeSession.id,
+            sessionId: res.id,
           });
         } else {
           console.log("stripe id is not found!");
@@ -40,40 +40,24 @@ const OrderSummery = () => {
         <div className="bg-white p-6 rounded shadow-sm">
           <h2 className="text-lg font-semibold mb-4">Order Summary</h2>
           {cartItems.map((product) => {
-            const {
-              id,
-              attributes: {
-                title,
-                sellingPrice,
-                images: {
-                  data: {
-                    attributes: { url, alternativeText },
-                  },
-                },
-              },
-              quantity,
-              price,
-            } = product;
+            const { _id, title, file, price, cartQuantity, cartPrice } =
+              product;
 
             return (
-              <div key={id}>
+              <div key={_id}>
                 <div className="flex items-center justify-between mb-4">
-                  <img
-                    src={url}
-                    alt={alternativeText}
-                    className="w-12 h-12 object-cover"
-                  />
+                  <img src={file} alt="" className="w-12 h-12 object-cover" />
                   <div className="flex-grow ml-4">
                     <h3 className="text-sm font-medium">{title}</h3>
                     <p className="text-sm text-gray-600">
-                      ${sellingPrice} x {quantity}
+                      ${price} x {cartQuantity}
                     </p>
                   </div>
                 </div>
                 <hr className="my-4" />
                 <div className="flex items-center justify-between mb-4">
                   <p className="text-sm">Subtotal:</p>
-                  <p className="text-sm">${price}</p>
+                  <p className="text-sm">${cartPrice}</p>
                 </div>
                 <hr className="my-4" />
               </div>

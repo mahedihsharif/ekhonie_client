@@ -3,29 +3,18 @@ import { useNavigate } from "react-router-dom";
 
 const Cat = ({ cat }) => {
   const navigate = useNavigate();
-  const {
-    id,
-    attributes: {
-      title,
-      products,
-      images: {
-        data: {
-          attributes: { alternativeText, url },
-        },
-      },
-    },
-  } = cat;
+  const { _id, title, file, totalProducts } = cat;
 
   const handleCategory = () => {
-    navigate(`/category/${id}`);
+    navigate(`/category/${_id}`);
   };
 
   return (
     <div className="flex flex-col items-center justify-center cursor-pointer">
       <div className="bg-gray-100 w-[60%] h-auto rounded-full p-3 hover:border-[2px] hover:border-blue-700 transition-all duration-100 ease-linear">
         <img
-          src={url}
-          alt={alternativeText}
+          src={file}
+          alt={title}
           className="w-full"
           onClick={handleCategory}
         />
@@ -34,7 +23,7 @@ const Cat = ({ cat }) => {
         {title}
       </h1>
       <p className="font-normal text-[13px] leading-5 text-[#515d66]">
-        {products} Products
+        {totalProducts} Products
       </p>
     </div>
   );

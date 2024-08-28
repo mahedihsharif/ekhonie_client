@@ -16,37 +16,39 @@ const Category = () => {
   );
 
   useEffect(() => {
-    if (loader) {
-      dispatch(get_category());
-    }
-  }, [dispatch, loader]);
+    dispatch(get_category());
+  }, [dispatch]);
 
   useEffect(() => {
     const sliderData = sliderSettings(8, 4, 3, 2);
     useSettings({ ...sliderData });
   }, []);
 
+  if (errorMessage) return <p>Error: {errorMessage}</p>;
+
   return (
     <div className="container mx-auto pt-8">
-      {loader ? (
-        <BeatLoader
-          color="#0043b4"
-          cssOverride={{ marginLeft: "50%", marginTop: "2%" }}
-          loading
-          margin={9}
-          size={22}
-          speedMultiplier={1}
-        />
-      ) : (
-        <>
-          {settings && (
-            <Slider {...settings}>
-              {items.length > 0 &&
-                items.map((cat) => <Cat key={cat.id} cat={cat} />)}
-            </Slider>
-          )}
-        </>
-      )}
+      <div className="container mx-auto pt-8">
+        {loader ? (
+          <BeatLoader
+            color="#0043b4"
+            cssOverride={{ marginLeft: "50%", marginTop: "2%" }}
+            loading
+            margin={9}
+            size={22}
+            speedMultiplier={1}
+          />
+        ) : (
+          <>
+            {settings && (
+              <Slider {...settings}>
+                {items.length > 0 &&
+                  items.map((cat) => <Cat key={cat._id} cat={cat} />)}
+              </Slider>
+            )}
+          </>
+        )}
+      </div>
     </div>
   );
 };

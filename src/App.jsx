@@ -11,7 +11,7 @@ import Register from "./pages/auth/register";
 import Home from "./pages/home";
 import NotFound from "./pages/not-found";
 import Orders from "./pages/orders";
-import Products from "./pages/products";
+import Products from "./pages/products/index";
 import Layout from "./utils/Layout";
 
 function App() {
