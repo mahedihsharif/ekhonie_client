@@ -24,7 +24,7 @@ const Category = () => {
     useSettings({ ...sliderData });
   }, []);
 
-  if (errorMessage) return <p>Error: {errorMessage}</p>;
+  if (errorMessage) return <p className="text-center">Error: {errorMessage}</p>;
 
   return (
     <div className="container mx-auto pt-8">
