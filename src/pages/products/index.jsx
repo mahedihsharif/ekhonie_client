@@ -1,18 +1,14 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { ScaleLoader } from "react-spinners";
 import ProductCard from "../../components/shared/product-card";
 import Sidebar from "./Sidebar";
 
 const Products = () => {
   const [filters, setFilters] = useState({ category: [], price: [], tag: [] });
-  const products = useSelector((state) => state.products.items);
-  const { id } = useParams();
+  const { items, loader } = useSelector((state) => state.products);
 
-  const categories = useSelector((state) => state.categories.items);
-  const category = categories.find((cat) => cat._id === id);
-
-  const filteredProducts = products.filter((product) => {
+  const filteredProducts = items.filter((product) => {
     const {
       category: { title },
       price,
@@ -49,9 +45,23 @@ const Products = () => {
       <div>
         <h1 className="text-center mb-5">Products</h1>
         <div className="w-4/4 p-2 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3  lg:grid-cols-4 gap-2">
-          {filteredProducts.map((product) => (
-            <ProductCard key={product._id} product={product} />
-          ))}
+          {loader ? (
+            <ScaleLoader
+              color="#14da9e"
+              cssOverride={{
+                display: "flex",
+              }}
+              height={30}
+              loading
+              margin={7}
+              radius={9}
+              width={3}
+            />
+          ) : (
+            filteredProducts.map((product) => (
+              <ProductCard key={product._id} product={product} />
+            ))
+          )}
         </div>
       </div>
     </div>

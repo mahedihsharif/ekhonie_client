@@ -7,11 +7,19 @@ import {
 
 export const login_user = createAsyncThunk(
   "auth/login_user",
-  async (userData) => {
-    const users = await loginUser(userData);
-    saveToLocalStorage("token", users.token);
-    saveToLocalStorage("user", users.user);
-    return users;
+  async (userData, { rejectWithValue }) => {
+    try {
+      const users = await loginUser(userData);
+      saveToLocalStorage("token", users.token);
+      saveToLocalStorage("user", users.user);
+      return users;
+    } catch (error) {
+      if (error.response && error.response.data) {
+        return rejectWithValue(error.response.data.msg);
+      } else {
+        return rejectWithValue(error.message);
+      }
+    }
   }
 );
 

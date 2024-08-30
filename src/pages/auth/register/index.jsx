@@ -56,9 +56,15 @@ const Register = () => {
     } else {
       try {
         const userData = createUser(values);
-        userData.then((data) => setUsers(data));
-        navigate("/login");
-        toast.success("Your Account has been created Successfully");
+        userData
+          .then((data) => {
+            setUsers(data);
+            navigate("/login");
+            toast.success("Your Account has been created Successfully");
+          })
+          .catch((err) => {
+            toast.error(err.response.data.msg);
+          });
       } catch (err) {
         console.log(err);
         toast.error("Failed to create account. Please try again.");

@@ -31,12 +31,12 @@ export const productReducer = createSlice({
         state.loader = true;
       })
       .addCase(get_products.fulfilled, (state, action) => {
-        state.items = action.payload;
         state.loader = false;
+        state.items = action.payload;
       })
       .addCase(get_products.rejected, (state, action) => {
-        state.errorMessage = action.error.message;
         state.loader = false;
+        state.errorMessage = action.error.message;
       });
   },
 });

@@ -29,7 +29,7 @@ const Login = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
-  const { loader } = useSelector((state) => state.auth);
+  const { loader, errorMessage } = useSelector((state) => state.auth);
 
   const {
     formState,
@@ -51,12 +51,17 @@ const Login = () => {
       }
     } else {
       try {
-        dispatch(login_user(values));
-        // const from = location.state?.from?.pathname || "/";
-        navigate("/");
-        toast.success("Account Login Successfully!");
+        dispatch(login_user(values)).then((value) => {
+          // const from = location.state?.from?.pathname || "/";
+          const { token } = value.payload;
+          if (token) {
+            navigate("/");
+            toast.success("Account Login Successfully!");
+          } else {
+            toast.error(value.payload);
+          }
+        });
       } catch (err) {
-        console.log(err);
         toast.error("Failed to login account. Please try again.");
       }
     }
