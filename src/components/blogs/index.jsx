@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Slider from "react-slick";
-import { BeatLoader } from "react-spinners";
 import { get_blogs } from "../../redux/reducers/blogReducer";
 import { sliderSettings } from "../../settings/slider-settings";
 import BlogCard from "./blog-card";
@@ -22,24 +21,11 @@ const Blogs = () => {
 
   return (
     <div className="px-5 2xl:px-60 bg-[#F1F5F6] py-5 md:py-16">
-      {loader ? (
-        <BeatLoader
-          color="#0043b4"
-          cssOverride={{ marginLeft: "40%" }}
-          loading
-          margin={9}
-          size={22}
-          speedMultiplier={1}
-        />
-      ) : (
-        <>
-          {settings && (
-            <Slider {...settings}>
-              {items.length > 0 &&
-                items.map((blog) => <BlogCard key={blog._id} blog={blog} />)}
-            </Slider>
-          )}
-        </>
+      {settings && (
+        <Slider {...settings}>
+          {items.length > 0 &&
+            items.map((blog) => <BlogCard key={blog._id} blog={blog} />)}
+        </Slider>
       )}
     </div>
   );

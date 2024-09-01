@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import { CiStopwatch } from "react-icons/ci";
 import { useDispatch, useSelector } from "react-redux";
 import Slider from "react-slick";
-import { BeatLoader } from "react-spinners";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
 import { get_products } from "../../../redux/reducers/productReducer";
@@ -44,26 +43,13 @@ const HotDeals = () => {
         </div>
 
         <div className="w-full md:w-[70%] mt-3 md:mt-0 container">
-          {loader ? (
-            <BeatLoader
-              color="#0043b4"
-              cssOverride={{ marginLeft: "40%", marginTop: "15%" }}
-              loading
-              margin={9}
-              size={22}
-              speedMultiplier={1}
-            />
-          ) : (
-            <>
-              {settings && (
-                <Slider {...settings}>
-                  {items.length > 0 &&
-                    items.map((product) => (
-                      <ProductCard key={product._id} product={product} />
-                    ))}
-                </Slider>
-              )}
-            </>
+          {settings && (
+            <Slider {...settings}>
+              {items.length > 0 &&
+                items.map((product) => (
+                  <ProductCard key={product._id} product={product} />
+                ))}
+            </Slider>
           )}
         </div>
       </div>

@@ -89,3 +89,14 @@ export const formData = {
     label: "Password",
   },
 };
+
+{
+  /* <BeatLoader
+            color="#0043b4"
+            cssOverride={{ marginLeft: "50%", marginTop: "2%" }}
+            loading
+            margin={9}
+            size={22}
+            speedMultiplier={1}
+          /> */
+}

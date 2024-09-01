@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import Slider from "react-slick";
-import { BeatLoader } from "react-spinners";
 import { sliderSettings } from "../../../settings/slider-settings";
 import LargeCard from "../../shared/large-card";
 import ProductCard from "../../shared/product-card";
@@ -22,26 +21,13 @@ const FeaturedProducts = () => {
       <LargeCard featured={"featured products"} btnText={"view all products"} />
 
       <div className="mt-3">
-        {loader ? (
-          <BeatLoader
-            color="#0043b4"
-            cssOverride={{ marginLeft: "40%", marginTop: "8%" }}
-            loading
-            margin={9}
-            size={22}
-            speedMultiplier={1}
-          />
-        ) : (
-          <>
-            {settings && (
-              <Slider {...settings}>
-                {items.length > 0 &&
-                  items.map((product) => (
-                    <ProductCard key={product._id} product={product} />
-                  ))}
-              </Slider>
-            )}
-          </>
+        {settings && (
+          <Slider {...settings}>
+            {items.length > 0 &&
+              items.map((product) => (
+                <ProductCard key={product._id} product={product} />
+              ))}
+          </Slider>
         )}
       </div>
     </div>
